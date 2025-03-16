@@ -36,3 +36,28 @@
   content  : "";
   animation: loadingDots 1s infinite;
 }
+
+@keyframes pulseWithTrail {
+  0% {
+    transform : scale(1);
+    box-shadow: 0 0 0 0 rgba(251, 146, 60, 0.7);
+    /* Cor laranja com opacidade */
+  }
+
+  50% {
+    transform : scale(1.1);
+    box-shadow: 0 0 0 8px rgba(251, 146, 60, 0);
+    /* Expande a sombra e desaparece */
+  }
+
+  100% {
+    transform : scale(1);
+    box-shadow: 0 0 0 0 rgba(251, 146, 60, 0);
+    /* Retorna ao estado inicial */
+  }
+}
+
+.animate-pulse-with-trail {
+  animation: pulseWithTrail 1.5s infinite;
+  /* Duração da animação e loop infinito */
+}
