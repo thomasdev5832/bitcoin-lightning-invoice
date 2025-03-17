@@ -64,7 +64,7 @@ const Transactions = ({ nwc }: TransactionsProps) => {
                 const sortedTransactions = formattedTransactions.sort((a, b) => b.timestamp - a.timestamp);
 
                 // Pega as 5 mais recentes (primeiras após ordenação)
-                const recentTransactions = sortedTransactions.slice(0, 5);
+                const recentTransactions = sortedTransactions.slice(0, 10);
                 setTransactions(recentTransactions);
                 setError(null);
             }
@@ -91,9 +91,9 @@ const Transactions = ({ nwc }: TransactionsProps) => {
                     <FiLoader className="animate-spin text-orange-500 text-2xl" />
                 </div>
             ) : error ? (
-                <div className="flex items-center justify-center gap-2 text-red-500 text-sm">
+                <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-red-50 border border-red-100 rounded-sm w-full max-w-full overflow-hidden text-red-600 flex items-center space-x-2 text-xs sm:text-sm">
                     <FiAlertCircle />
-                    <span>{error}</span>
+                    <span className="break-words">{error}</span>
                 </div>
             ) : transactions.length === 0 ? (
                 <p className="text-gray-400 text-sm text-center">No transactions found.</p>

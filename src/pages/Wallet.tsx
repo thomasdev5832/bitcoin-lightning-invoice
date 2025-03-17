@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { FiLoader, FiZap, FiRefreshCw, FiSettings, FiAlertCircle, FiEye, FiEyeOff } from "react-icons/fi";
+import { FiLoader, FiAlertCircle, FiEye, FiEyeOff, FiZap } from "react-icons/fi";
 import { webln } from "@getalby/sdk";
 import GenerateInvoiceModal from "../components/GenerateInvoiceModal";
 import Transactions from "../components/Transactions";
+import Header from "../components/Header";
 
 const Wallet = () => {
     const [nwc, setNwc] = useState<webln.NostrWebLNProvider | null>(null);
@@ -15,6 +16,7 @@ const Wallet = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isBalanceHidden, setIsBalanceHidden] = useState<boolean>(true);
+    const [transactionsKey, setTransactionsKey] = useState<number>(0);
 
     const connectWallet = async () => {
         try {
@@ -46,6 +48,7 @@ const Wallet = () => {
             const newBalance = balanceResponse.balance;
             setBalanceMsat(newBalance);
             setError(null);
+            setTransactionsKey(prevKey => prevKey + 1);
             setIsLoading(false);
         } catch (err) {
             setError("Error checking balance: " + (err as Error).message);
@@ -79,67 +82,52 @@ const Wallet = () => {
     };
 
     return (
-        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center justify-center gap-6 sm:gap-10 p-2">
-            <div>
-                <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 flex items-center justify-center space-x-3">
-                    <FiZap className="text-orange-500" />
-                    <span className="text-orange-500">Lightning Invoice</span>
-                </h1>
-                <p className="text-gray-400 mt-2 text-xs sm:text-base text-center uppercase">Fast and Secure Bitcoin Payments</p>
-            </div>
+        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2 mt-[30%] sm:mt-[10%]">
+            {nwc && <Header nwc={nwc} isLoading={isLoading} checkBalance={checkBalance} />}
 
-            <div className="rounded-lg shadow-sm  p-4 w-full sm:w-xl flex flex-col items-center justify-center">
+            <div className="rounded-lg shadow-sm w-full sm:w-xl flex flex-col items-center justify-center">
                 {!nwc ? (
-                    <div className="space-y-4 p-2 w-full border border-zinc-800">
-                        <h2 className="text-lg sm:text-xl font-semibold text-gray-400 text-center">Connect Nostr Wallet</h2>
-                        <input
-                            type="text"
-                            placeholder="Enter connection URI (nostr+walletconnect://...)"
-                            value={connectionUri}
-                            onChange={(e) => setConnectionUri(e.target.value)}
-                            className="w-full p-2 sm:p-3 border text-gray-400 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                        />
-                        <button
-                            onClick={connectWallet}
-                            disabled={isLoading}
-                            className="cursor-pointer w-full bg-orange-500 text-zinc-950 py-2 sm:py-3 rounded-md hover:bg-orange-600 uppercase transition font-semibold flex items-center justify-center text-sm sm:text-base"
-                        >
-                            {isLoading ? <FiLoader className="animate-spin" /> : "Connect"}
-                        </button>
+                    <div className="space-y-10 w-full sm:w-md">
+                        <div className="flex flex-col items-center justify-center">
+                            <div className="flex flex-row items-center gap-1">
+                                <FiZap className="text-orange-500 sm:text-3xl" />
+                                <h1 className="text-xl sm:text-4xl font-bold text-orange-500 flex flex-col items-left justify-start space-x-3">
+                                    Lightning Invoice
+                                </h1>
+                            </div>
+
+                            <p className="text-gray-400 text-md sm:text-md text-center">
+                                Fast and Secure Bitcoin Payments
+                            </p>
+                        </div>
+
+
+                        <div className="space-y-4 p-4 w-full border border-zinc-800">
+
+                            <h2 className="text-lg sm:text-xl font-semibold text-gray-400 text-center flex flex-row items-center justify-center">
+                                Connect Nostr Wallet</h2>
+                            <input
+                                type="text"
+                                placeholder="Enter connection URI (nostr+walletconnect://...)"
+                                value={connectionUri}
+                                onChange={(e) => setConnectionUri(e.target.value)}
+                                className="w-full p-2 sm:p-3 border text-gray-400 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            />
+                            <button
+                                onClick={connectWallet}
+                                disabled={isLoading}
+                                className="cursor-pointer w-full bg-orange-500 text-zinc-950 py-2 sm:py-3 rounded-md hover:bg-orange-600 uppercase transition font-semibold flex items-center justify-center text-sm sm:text-base"
+                            >
+                                {isLoading ? <FiLoader className="animate-spin" /> : "Connect"}
+                            </button>
+                        </div>
                     </div>
                 ) : (
-                    <div className="w-full ">
-                        <div className="border rounded-md border-zinc-800 p-4">
-                            <div className="text-center flex ">
-                                <div className="w-full mx-auto flex items-center justify-between px-2 sm:px-2">
-                                    <div className="flex items-left space-x-2">
-                                        <div className="flex flex-row items-center justify-center gap-2">
-                                            <div className="relative">
-                                                <div className="h-2 w-2 bg-orange-400 rounded-full animate-pulse-with-trail"></div>
-                                            </div>
-                                            <p className="text-gray-400 font-bold text-[10px] sm:text-xs uppercase">Nostr Wallet Connected</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-right justify-end">
-                                        <button
-                                            onClick={() => checkBalance()}
-                                            disabled={isLoading}
-                                            className="cursor-pointer p-2 sm:p-3 bg-zinc-950 rounded-full hover:bg-zinc-900 transition flex items-center justify-center"
-                                        >
-                                            {isLoading ? <FiLoader className="text-gray-400 animate-spin text-sm sm:text-base" /> : <FiRefreshCw className="text-gray-400 text-sm sm:text-base" />}
-                                        </button>
-                                        <button
-                                            onClick={() => console.log("Settings clicked")}
-                                            className="cursor-pointer p-2 sm:p-3 bg-zinc-950 rounded-full hover:bg-zinc-900 transition flex items-center justify-center"
-                                        >
-                                            <FiSettings className="text-gray-400 text-sm sm:text-base" />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="bg-zinc-950 relative my-2">
+                    <div className="w-full">
+                        <div className="border rounded-md border-zinc-800 p-4 space-y-4 mb-20">
+                            <div className="bg-zinc-950 relative">
                                 <div className="flex flex-row items-center justify-start">
-                                    <label className="text-gray-400 font-medium text-left text-xs uppercase ml-2 ">Balance</label>
+                                    <label className="text-gray-400 font-medium text-left text-xs uppercase">Balance</label>
                                     <button
                                         onClick={toggleBalanceVisibility}
                                         className="cursor-pointer m-1 text-gray-400 hover:text-orange-500 transition"
@@ -169,15 +157,13 @@ const Wallet = () => {
                                 onClick={() => setIsModalOpen(true)}
                                 className="cursor-pointer w-full bg-orange-500 text-zinc-950 py-2 sm:py-3 rounded-md hover:bg-orange-600 uppercase transition font-semibold text-sm sm:text-base"
                             >
-                                Generate Invoice
+                                Create Invoice
                             </button>
                         </div>
 
-                        <Transactions nwc={nwc} />
+                        <Transactions key={transactionsKey} nwc={nwc} />
                     </div>
                 )}
-
-
 
                 <GenerateInvoiceModal
                     isOpen={isModalOpen}
@@ -192,11 +178,7 @@ const Wallet = () => {
                     invoiceAmount={invoiceAmount}
                     invoiceDescription={invoiceDescription}
                 />
-
             </div>
-
-
-
 
             {error && (
                 <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-red-50 border border-red-100 rounded-sm w-full max-w-full overflow-hidden text-red-600 flex items-center space-x-2 text-xs sm:text-sm">

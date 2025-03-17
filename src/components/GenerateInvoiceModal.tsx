@@ -27,7 +27,7 @@ const GenerateInvoiceModal = ({ isOpen, onClose, onCreateInvoice, isLoading, inv
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-20">
             {/* Botão de alternância de tema (lado esquerdo) */}
             <button
                 onClick={toggleTheme}
@@ -47,7 +47,7 @@ const GenerateInvoiceModal = ({ isOpen, onClose, onCreateInvoice, isLoading, inv
             </button>
 
             {invoice ? (
-                <div className={`${isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-white text-gray-900"} p-4 py-8 sm:p-8 rounded-sm shadow-lg max-w-xs w-full mx-2 sm:mx-4 border ${isDarkMode ? "border-zinc-800" : "border-gray-200"} relative`}>
+                <div className={`${isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-white text-gray-900"} p-4 py-8 sm:p-8 rounded-sm shadow-lg max-w-xs w-full mx-2 sm:mx-4 border ${isDarkMode ? "border-zinc-800" : "border-gray-200"} relative z-30`}>
                     <div className="flex items-center justify-center gap-2">
                         <FiZap className="text-orange-500 text-xl sm:text-2xl" />
                         <h2 className="text-lg font-bold text-center">Bitcoin Lightning Invoice</h2>
@@ -85,7 +85,7 @@ const GenerateInvoiceModal = ({ isOpen, onClose, onCreateInvoice, isLoading, inv
                     </div>
                 </div>
             ) : (
-                <div className={`${isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-white text-gray-900"} p-4 sm:p-6 rounded-md shadow-lg max-w-xs sm:max-w-md w-full mx-2 sm:mx-4 border ${isDarkMode ? "border-zinc-800" : "border-gray-200"} relative`}>
+                <div className={`${isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-white text-gray-900"} p-4 sm:p-6 rounded-md shadow-lg max-w-xs sm:max-w-md w-full mx-2 sm:mx-4 border ${isDarkMode ? "border-zinc-800" : "border-gray-200"} relative z-30`}>
                     <div className="flex flex-row items-center justify-center gap-2 my-2 mb-4">
                         <FiZap className="text-orange-500" />
                         <h2 className="text-xl sm:text-2xl font-bold text-orange-500 text-center">Generate Invoice</h2>
