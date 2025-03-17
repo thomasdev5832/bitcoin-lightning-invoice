@@ -52,13 +52,14 @@ const GenerateInvoiceModal = ({ isOpen, onClose, onCreateInvoice, isLoading, inv
                         <FiZap className="text-orange-500 text-xl sm:text-2xl" />
                         <h2 className="text-lg font-bold text-center">Bitcoin Lightning Invoice</h2>
                     </div>
-                    <div className="flex justify-center m-2 sm:m-4">
+                    <div className="flex justify-center m-3 sm:m-4 relative">
+                        {/* QR Code */}
                         <QRCodeSVG
                             value={invoice}
-                            size={150}
+                            size={250}
                             level="M"
-                            bgColor={isDarkMode ? "#18181b" : "#ffffff"} // Cor de fundo do QR code
-                            fgColor={isDarkMode ? "#ffffff" : "#000000"} // Cor do QR code
+                            bgColor={isDarkMode ? "#18181b" : "#ffffff"}
+                            fgColor={isDarkMode ? "#ffffff" : "#000000"}
                             marginSize={4}
                             title={`Invoice for ${invoiceAmount} satoshis`}
                         />
