@@ -1,6 +1,14 @@
-import { useState } from "react";
+// Improved and fully translated GenerateInvoiceModal.tsx
+import {
+    FiLoader,
+    FiZap,
+    FiCopy,
+    FiShare2,
+    FiSun,
+    FiMoon,
+} from "react-icons/fi";
+import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
-import { FiLoader, FiZap, FiCopy, FiShare2, FiSun, FiMoon } from "react-icons/fi";
 
 interface GenerateInvoiceModalProps {
     isOpen: boolean;
@@ -16,30 +24,60 @@ interface GenerateInvoiceModalProps {
     invoiceDescription: string;
 }
 
-const GenerateInvoiceModal = ({ isOpen, onClose, onCreateInvoice, isLoading, invoice, invoiceAmount, invoiceDescription }: GenerateInvoiceModalProps) => {
-    const [isDarkMode, setIsDarkMode] = useState(true); // Estado para controlar o tema
+const GenerateInvoiceModal = ({
+    isOpen,
+    onClose,
+    onCreateInvoice,
+    isLoading,
+    invoice,
+    invoiceAmount,
+    invoiceDescription,
+}: GenerateInvoiceModalProps) => {
+    const [isDarkMode, setIsDarkMode] = useState(true);
+    const [usdAmount, setUsdAmount] = useState("");
+    const [satsAmount, setSatsAmount] = useState(0);
+    const SATS_PER_USD = 2800; // TODO: replace with live exchange rate
+
+    useEffect(() => {
+        const parsed = parseFloat(usdAmount);
+        if (!isNaN(parsed)) {
+            const sats = Math.round(parsed * SATS_PER_USD);
+            setSatsAmount(sats);
+            onCreateInvoice.amount(sats);
+        } else {
+            setSatsAmount(0);
+        }
+    }, [usdAmount, onCreateInvoice]);
+
+    const handleKeyPress = (key: string) => {
+        if (key === "←") {
+            setUsdAmount((prev) => prev.slice(0, -1));
+        } else if (key === "." && usdAmount.includes(".")) {
+            return;
+        } else {
+            setUsdAmount((prev) => prev + key);
+        }
+    };
+
+    const toggleTheme = () => setIsDarkMode((prev) => !prev);
+    const keypadKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "←"];
 
     if (!isOpen) return null;
 
-    // Função para alternar entre dark e light mode
-    const toggleTheme = () => {
-        setIsDarkMode((prev) => !prev);
-    };
-
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-20">
-            {/* Botão de alternância de tema (lado esquerdo) */}
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            {/* Theme Toggle Button */}
             <button
                 onClick={toggleTheme}
-                className="absolute top-4 left-4 p-2 bg-zinc-800 text-gray-300 rounded-full hover:bg-zinc-700 transition cursor-pointer z-50"
+                className="absolute top-4 left-4 p-2 bg-zinc-800 text-gray-300 rounded-full hover:bg-zinc-700 transition z-50"
             >
                 {isDarkMode ? <FiSun className="h-5 w-5" /> : <FiMoon className="h-5 w-5" />}
             </button>
 
-            {/* Botão de fechar (lado direito) */}
+            {/* Close Button */}
             <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 bg-zinc-800 text-gray-300 rounded-full hover:bg-zinc-700 transition cursor-pointer z-50"
+                className="absolute top-4 right-4 p-2 bg-zinc-800 text-gray-300 rounded-full hover:bg-zinc-700 transition z-50"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -47,80 +85,84 @@ const GenerateInvoiceModal = ({ isOpen, onClose, onCreateInvoice, isLoading, inv
             </button>
 
             {invoice ? (
-                <div className={`${isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-white text-gray-900"} p-4 py-8 sm:p-8 rounded-sm shadow-lg max-w-xs w-full mx-2 sm:mx-4 border ${isDarkMode ? "border-zinc-800" : "border-gray-200"} relative z-30`}>
+                <div className={`${isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-white text-gray-900"} p-6 rounded-md shadow-lg max-w-xs w-full border ${isDarkMode ? "border-zinc-800" : "border-gray-200"}`}>
                     <div className="flex items-center justify-center gap-2">
-                        <FiZap className="text-orange-500 text-xl sm:text-2xl" />
-                        <h2 className="text-lg font-bold text-center">Bitcoin Lightning Invoice</h2>
+                        <FiZap className="text-orange-500 text-2xl" />
+                        <h2 className="text-lg font-bold">Lightning Invoice</h2>
                     </div>
-                    <div className="flex justify-center m-3 sm:m-4 relative">
-                        {/* QR Code */}
+
+                    <div className="flex justify-center my-4">
                         <QRCodeSVG
                             value={invoice}
                             size={250}
                             level="M"
                             bgColor={isDarkMode ? "#18181b" : "#ffffff"}
                             fgColor={isDarkMode ? "#ffffff" : "#000000"}
-                            marginSize={4}
-                            title={`Invoice for ${invoiceAmount} satoshis`}
+                            title={`Invoice for ${invoiceAmount} sats`}
                         />
                     </div>
-                    <div className="space-y-2 text-sm">
+
+                    <div className="text-sm space-y-1">
                         <p><strong>Amount:</strong> {invoiceAmount} sats</p>
                         <p><strong>Description:</strong> {invoiceDescription}</p>
                         <p className="break-all text-[10px]"><strong>Invoice:</strong> {invoice}</p>
                     </div>
-                    <div className="mt-4 sm:mt-6 flex space-x-2 sm:space-x-4">
+
+                    <div className="mt-4 flex space-x-2">
                         <button
-                            onClick={() => navigator.clipboard.writeText(invoice).then(() => alert("Invoice copied!")).catch(() => alert("Failed to copy"))}
-                            className={`cursor-pointer flex-1 ${isDarkMode ? "bg-zinc-800 hover:bg-zinc-700" : "bg-gray-500 hover:bg-gray-600"} text-white py-2 sm:py-3 rounded-md transition font-semibold flex items-center justify-center space-x-1 sm:space-x-2 text-xs sm:text-sm`}
+                            onClick={() => navigator.clipboard.writeText(invoice).then(() => alert("Invoice copied!"))}
+                            className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white py-2 rounded-md flex items-center justify-center gap-2"
                         >
-                            <FiCopy className="text-sm sm:text-lg" /> <span>Copy Invoice</span>
+                            <FiCopy /> Copy
                         </button>
                         <button
-                            onClick={() => navigator.share ? navigator.share({ title: "Lightning Invoice", text: `Invoice for ${invoiceAmount} satoshis: ${invoice}` }).catch(() => alert("Sharing failed")) : alert("Sharing not supported")}
-                            className={`cursor-pointer flex-1 ${isDarkMode ? "bg-zinc-800 hover:bg-zinc-700" : "bg-gray-500 hover:bg-gray-600"} text-white py-2 sm:py-3 rounded-md transition font-semibold flex items-center justify-center space-x-1 sm:space-x-2 text-xs sm:text-sm`}
+                            onClick={() => navigator.share
+                                ? navigator.share({ title: "Lightning Invoice", text: invoice })
+                                : alert("Sharing not supported")}
+                            className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white py-2 rounded-md flex items-center justify-center gap-2"
                         >
-                            <FiShare2 className="text-sm sm:text-lg" /> <span>Share Invoice</span>
+                            <FiShare2 /> Share
                         </button>
                     </div>
                 </div>
             ) : (
-                <div className={`${isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-white text-gray-900"} p-4 sm:p-6 rounded-md shadow-lg max-w-xs sm:max-w-md w-full mx-2 sm:mx-4 border ${isDarkMode ? "border-zinc-800" : "border-gray-200"} relative z-30`}>
-                    <div className="flex flex-row items-center justify-center gap-2 my-2 mb-4">
-                        <FiZap className="text-orange-500" />
-                        <h2 className="text-xl sm:text-2xl font-bold text-orange-500 text-center">Generate Invoice</h2>
+                <div className={`${isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-white text-gray-900"} p-6 rounded-md shadow-lg max-w-xs w-full border ${isDarkMode ? "border-zinc-800" : "border-gray-200"}`}>
+                    <h2 className="text-2xl font-bold text-center text-orange-500 mb-4">Enter Amount</h2>
+
+                    <div className="text-center mb-2">
+                        <p className="text-4xl font-mono">${usdAmount || "0.00"}</p>
+                        <p className="text-sm text-gray-400">≈ {satsAmount.toLocaleString()} sats</p>
                     </div>
-                    <div className="space-y-4">
-                        <div>
-                            <label htmlFor="invoiceAmount" className="block text-gray-400 font-medium text-left text-sm mb-1">Amount (sats)</label>
-                            <input
-                                id="invoiceAmount"
-                                type="number"
-                                min="1"
-                                required
-                                onChange={(e) => onCreateInvoice.amount(Number(e.target.value))}
-                                className={`w-full p-2 border ${isDarkMode ? "border-zinc-700 bg-zinc-950 text-gray-300" : "border-gray-300 bg-white text-gray-900"} rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500`}
-                                placeholder="Enter amount"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="invoiceDescription" className="block text-gray-400 font-medium text-left text-sm mb-1">Description</label>
-                            <input
-                                id="invoiceDescription"
-                                type="text"
-                                onChange={(e) => onCreateInvoice.description(e.target.value)}
-                                className={`w-full p-2 border ${isDarkMode ? "border-zinc-700 bg-zinc-950 text-gray-300" : "border-gray-300 bg-white text-gray-900"} rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500`}
-                                placeholder="Enter description"
-                            />
-                        </div>
-                        <button
-                            onClick={onCreateInvoice.create}
-                            disabled={isLoading || invoiceAmount <= 0}
-                            className="w-full bg-orange-500 text-zinc-950 py-2 rounded-md hover:bg-orange-600 transition font-semibold disabled:bg-zinc-800 disabled:cursor-not-allowed"
-                        >
-                            {isLoading ? <FiLoader className="animate-spin mx-auto" /> : "Create Invoice"}
-                        </button>
+
+                    <div className="grid grid-cols-3 gap-3 my-6">
+                        {keypadKeys.map((key) => (
+                            <button
+                                key={key}
+                                onClick={() => handleKeyPress(key)}
+                                className="text-2xl py-4 bg-zinc-800 hover:bg-zinc-700 rounded-lg font-bold"
+                            >
+                                {key}
+                            </button>
+                        ))}
                     </div>
+
+                    <div className="mb-4">
+                        <label className="text-sm font-medium block mb-1">Description (optional)</label>
+                        <input
+                            type="text"
+                            placeholder="e.g., Coca-Cola"
+                            onChange={(e) => onCreateInvoice.description(e.target.value)}
+                            className="w-full p-2 rounded-md border border-zinc-700 bg-zinc-900 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        />
+                    </div>
+
+                    <button
+                        onClick={onCreateInvoice.create}
+                        disabled={satsAmount <= 0 || isLoading}
+                        className="w-full bg-orange-500 text-black py-3 rounded-md font-bold text-lg hover:bg-orange-600 disabled:opacity-50"
+                    >
+                        {isLoading ? <FiLoader className="animate-spin mx-auto" /> : "Create Invoice"}
+                    </button>
                 </div>
             )}
         </div>
