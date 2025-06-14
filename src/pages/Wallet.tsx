@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FiLoader, FiAlertCircle, FiEye, FiEyeOff, FiZap } from "react-icons/fi";
+import { useState, useEffect } from "react";
+import { FiLoader, FiAlertCircle, FiEye, FiEyeOff, FiZap, FiCheck } from "react-icons/fi";
 import { webln } from "@getalby/sdk";
 import GenerateInvoiceModal from "../components/GenerateInvoiceModal";
 import Transactions from "../components/Transactions";
@@ -17,6 +17,10 @@ const Wallet = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isBalanceHidden, setIsBalanceHidden] = useState<boolean>(true);
     const [transactionsKey, setTransactionsKey] = useState<number>(0);
+
+    // Estados para notificação de pagamento
+    const [paymentNotification, setPaymentNotification] = useState<string | null>(null);
+    const [monitoringInterval, setMonitoringInterval] = useState<number | null>(null);
 
     const connectWallet = async () => {
         try {
@@ -71,19 +75,107 @@ const Wallet = () => {
             setInvoice(invoiceResponse.paymentRequest);
             setError(null);
             setIsLoading(false);
+
+            // Iniciar monitoramento do pagamento
+            startPaymentMonitoring();
         } catch (err) {
             setError("Error creating invoice: " + (err as Error).message);
             setIsLoading(false);
         }
     };
 
+    // Função para monitorar pagamentos através do saldo
+    const startPaymentMonitoring = () => {
+        if (!nwc || !balanceMsat) return;
+
+        const initialBalance = balanceMsat;
+        const expectedNewBalance = balanceMsat + invoiceAmount;
+
+        console.log(`Monitoring payment. Initial: ${initialBalance}, Expected: ${expectedNewBalance}`);
+
+        const checkBalanceChange = async () => {
+            try {
+                const balanceResponse = await nwc.getBalance();
+                const currentBalance = balanceResponse.balance;
+
+                console.log(`Current balance: ${currentBalance}`);
+
+                // Se o saldo aumentou pelo valor do invoice
+                if (currentBalance >= expectedNewBalance) {
+                    console.log("🎉 PAYMENT DETECTED! Showing notification...");
+                    setPaymentNotification(`Payment received! ${invoiceAmount} sats`);
+                    setBalanceMsat(currentBalance);
+                    setTransactionsKey(prevKey => prevKey + 1);
+
+                    // Fechar o modal automaticamente
+                    setTimeout(() => {
+                        setIsModalOpen(false);
+                        setInvoice(null);
+                        setInvoiceAmount(0);
+                        setInvoiceDescription("");
+                        console.log("Modal closed automatically");
+                    }, 1500); // Fecha depois de 1.5 segundos
+
+                    // Limpar notificação após 8 segundos
+                    setTimeout(() => {
+                        console.log("Hiding notification...");
+                        setPaymentNotification(null);
+                    }, 8000);
+
+                    return true; // Pagamento confirmado
+                }
+                return false; // Ainda não pago
+            } catch (err) {
+                console.log("Error checking balance:", err);
+                return false;
+            }
+        };
+
+        // Verificar a cada 3 segundos por até 10 minutos
+        const maxAttempts = 200; // 10 minutos / 3 segundos
+        let attempts = 0;
+
+        const intervalId = setInterval(async () => {
+            attempts++;
+            const isPaid = await checkBalanceChange();
+
+            if (isPaid || attempts >= maxAttempts) {
+                clearInterval(intervalId);
+                setMonitoringInterval(null); // Limpar referência
+                if (attempts >= maxAttempts) {
+                    console.log("Payment monitoring timeout");
+                }
+            }
+        }, 3000);
+
+        // Salvar referência do interval para poder cancelar depois
+        setMonitoringInterval(intervalId);
+    };
+
     const toggleBalanceVisibility = () => {
         setIsBalanceHidden(!isBalanceHidden);
     };
 
+    // Limpar monitoramento quando modal fechar
+    useEffect(() => {
+        if (!isModalOpen && monitoringInterval) {
+            console.log("Stopping payment monitoring - modal closed");
+            clearInterval(monitoringInterval);
+            setMonitoringInterval(null);
+        }
+    }, [isModalOpen, monitoringInterval]);
+
     return (
         <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2 mt-[30%] sm:mt-[10%]">
             {nwc && <Header nwc={nwc} isLoading={isLoading} checkBalance={checkBalance} />}
+
+            {/* Notificação de Pagamento */}
+            {paymentNotification && (
+                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[9999] bg-green-500 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-2 border-2 border-green-400">
+                    <FiCheck className="text-2xl animate-bounce" />
+                    <span className="font-bold text-lg">{paymentNotification}</span>
+                </div>
+            )}
 
             <div className="rounded-lg shadow-sm w-full sm:w-xl flex flex-col items-center justify-center">
                 {!nwc ? (
@@ -167,7 +259,17 @@ const Wallet = () => {
 
                 <GenerateInvoiceModal
                     isOpen={isModalOpen}
-                    onClose={() => { setIsModalOpen(false); setInvoice(null); setInvoiceAmount(0); setInvoiceDescription(""); }}
+                    onClose={() => {
+                        // Parar monitoramento ao fechar manualmente
+                        if (monitoringInterval) {
+                            clearInterval(monitoringInterval);
+                            setMonitoringInterval(null);
+                        }
+                        setIsModalOpen(false);
+                        setInvoice(null);
+                        setInvoiceAmount(0);
+                        setInvoiceDescription("");
+                    }}
                     onCreateInvoice={{
                         amount: setInvoiceAmount,
                         description: setInvoiceDescription,
