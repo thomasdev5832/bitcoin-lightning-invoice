@@ -32,7 +32,7 @@ const Wallet = () => {
     // Formatting functions (return strings for display)
     const formatSats = (sats: number): string => sats.toLocaleString('en-US', { maximumFractionDigits: 0 }); // No decimals for sats
     const formatBtc = (btc: number): string => btc.toFixed(8); // 8 decimals for BTC
-    const formatUsd = (usd: number): string => usd < 1 ? usd.toFixed(4) : usd.toFixed(2); // 4 decimals for small USD, 2 for large
+    const formatUsd = (usd: number): string => usd < 1 ? usd.toFixed(2) : usd.toFixed(2); // 4 decimals for small USD, 2 for large
 
     // Format balance for display
     const formatBalance = (msat: number, btcPrice: number) => {
@@ -312,7 +312,7 @@ const Wallet = () => {
                                     </button>
                                 </div>
                                 <div className="flex items-center justify-center gap-4 flex-col sm:flex-row">
-                                    <div className="text-gray-700 font-medium text-center">
+                                    <div className="text-gray-700 font-medium text-center mt-2">
                                         {isLoading ? (
                                             <span className="flex items-center justify-center my-6">
                                                 <FiLoader className="text-orange-500 animate-spin text-2xl sm:text-2xl" />
