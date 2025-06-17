@@ -188,7 +188,7 @@ const GenerateInvoiceModal = ({
 
             {invoice ? (
                 <div
-                    className={`p-6 rounded-lg shadow-lg border animate-slide-up flex flex-col ${isDarkMode
+                    className={`p-6 rounded-lg shadow-lg border animate-slide-up sm:w-xs flex flex-col ${isDarkMode
                         ? "bg-zinc-950 text-gray-300 border-zinc-700"
                         : "bg-gray-50 text-gray-700 border-gray-200"
                         }`}
@@ -326,12 +326,22 @@ const GenerateInvoiceModal = ({
 
                     <button
                         onClick={onCreateInvoice.create}
-                        disabled={(inputMode === "usd" ? parseFloat(usdAmount) : parseInt(satsAmount)) <= 0 || isLoading}
+                        disabled={
+                            isLoading ||
+                            (inputMode === "usd"
+                                ? !usdAmount || parseFloat(usdAmount) <= 0 || isNaN(parseFloat(usdAmount))
+                                : !satsAmount || parseInt(satsAmount, 10) <= 0 || isNaN(parseInt(satsAmount, 10)))
+                        }
                         className={`w-full py-3 rounded-lg font-bold text-lg transition ${isDarkMode
                             ? "bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-400 active:bg-orange-700 active:scale-95"
                             : "bg-orange-600 text-white hover:bg-orange-700 disabled:bg-orange-400 active:bg-orange-800 active:scale-95"
                             } disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-orange-500`}
-                        aria-disabled={(inputMode === "usd" ? parseFloat(usdAmount) : parseInt(satsAmount)) <= 0 || isLoading}
+                        aria-disabled={
+                            isLoading ||
+                            (inputMode === "usd"
+                                ? !usdAmount || parseFloat(usdAmount) <= 0 || isNaN(parseFloat(usdAmount))
+                                : !satsAmount || parseInt(satsAmount, 10) <= 0 || isNaN(parseInt(satsAmount, 10)))
+                        }
                     >
                         {isLoading ? (
                             <FiLoader className="animate-spin h-6 w-6 mx-auto" />
