@@ -45,9 +45,9 @@ const Transactions = ({ nwc }: TransactionsProps) => {
                     // Usa o valor diretamente como sats (sem conversão)
                     const amountInSats = tx.amount; // Já está em sats, conforme logs
 
-                    console.log("Raw tx.amount:", tx.amount);
-                    console.log("Formatted amountInSats:", amountInSats);
-                    console.log("Timestamp:", timestamp);
+                    // console.log("Raw tx.amount:", tx.amount);
+                    // console.log("Formatted amountInSats:", amountInSats);
+                    // console.log("Timestamp:", timestamp);
 
                     return {
                         id: tx.payment_hash, // Usamos o payment_hash como ID
