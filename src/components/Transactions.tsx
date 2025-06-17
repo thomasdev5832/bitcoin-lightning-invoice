@@ -111,7 +111,7 @@ const Transactions = ({ nwc }: TransactionsProps) => {
                                     <p className="text-gray-400 text-xs">{tx.createdAt}</p>
                                 </div>
                             </div>
-                            <p className={`text-sm font-semibold ${tx.type === "incoming" ? "text-green-400" : "text-red-400"}`}>
+                            <p className={`text-sm font-semibold ${tx.type === "incoming" ? "text-green-400" : "text-orange-500"}`}>
                                 {tx.type === "incoming" ? "+" : "-"} {tx.amount} sats
                             </p>
                         </div>

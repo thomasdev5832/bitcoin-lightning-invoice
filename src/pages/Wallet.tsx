@@ -84,21 +84,33 @@ const Wallet = () => {
         return () => clearInterval(intervalId);
     }, []);
 
-    const connectWallet = async () => {
+    // Load connectionUri from sessionStorage on mount and attempt reconnect
+    useEffect(() => {
+        const savedUri = sessionStorage.getItem("nostrWalletConnectUri");
+        if (savedUri) {
+            console.log("Found saved connection URI in sessionStorage:", savedUri);
+            setConnectionUri(savedUri);
+            connectWallet(savedUri);
+        }
+    }, []);
+
+    const connectWallet = async (uri: string) => {
         try {
-            if (!connectionUri) {
+            if (!uri) {
                 setError("Please enter a valid connection URI.");
                 return;
             }
             setIsLoading(true);
-            const nwcProvider = new webln.NostrWebLNProvider({ nostrWalletConnectUrl: connectionUri });
+            const nwcProvider = new webln.NostrWebLNProvider({ nostrWalletConnectUrl: uri });
             await nwcProvider.enable();
             setNwc(nwcProvider);
             setError(null);
+            sessionStorage.setItem("nostrWalletConnectUri", uri);
             await checkBalance(nwcProvider);
             setIsLoading(false);
         } catch (err) {
             setError("Failed to connect wallet: " + (err as Error).message);
+            console.error("Wallet connection error:", err);
             setIsLoading(false);
         }
     };
@@ -187,7 +199,7 @@ const Wallet = () => {
                     setTimeout(() => {
                         setPaymentNotification(null);
                         console.log("Hiding notification...");
-                    }, 8000);
+                    }, 10000);
 
                     return true;
                 }
@@ -232,10 +244,20 @@ const Wallet = () => {
 
     return (
         <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2 mt-[20%] sm:mt-[10%]">
-            {nwc && <Header nwc={nwc} isLoading={isLoading} checkBalance={checkBalance} />}
+            {nwc && (
+                <Header
+                    nwc={nwc}
+                    isLoading={isLoading}
+                    checkBalance={checkBalance}
+                    setNwc={setNwc}
+                    setConnectionUri={setConnectionUri}
+                    setBalanceMsat={setBalanceMsat}
+                    setError={setError}
+                />
+            )}
 
             {paymentNotification && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[9999] bg-orange-500 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-2 border-2 border-orange-400 w-auto whitespace-nowrap">
+                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[9999] bg-green-400 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-2 border-2 border-green-400 w-auto whitespace-nowrap">
                     <FiCheck className="text-2xl animate-bounce" />
                     <span className="font-bold text-lg">{paymentNotification}</span>
                 </div>
@@ -267,7 +289,7 @@ const Wallet = () => {
                                 className="w-full p-2 sm:p-3 border text-gray-400 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                             />
                             <button
-                                onClick={connectWallet}
+                                onClick={() => connectWallet(connectionUri)}
                                 disabled={isLoading}
                                 className="cursor-pointer w-full bg-orange-500 text-zinc-950 py-2 sm:py-3 rounded-md hover:bg-orange-600 uppercase transition font-semibold flex items-center justify-center text-sm sm:text-base"
                             >
