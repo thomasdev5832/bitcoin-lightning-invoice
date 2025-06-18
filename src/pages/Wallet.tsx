@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import { FiLoader, FiAlertCircle, FiEye, FiEyeOff, FiZap, FiCheck } from "react-icons/fi";
+import { FiLoader, FiAlertCircle, FiEye, FiEyeOff, FiCheck } from "react-icons/fi";
 import { webln } from "@getalby/sdk";
 import GenerateInvoiceModal from "../components/GenerateInvoiceModal";
 import Transactions from "../components/Transactions";
 import Header from "../components/Header";
+import ConnectWallet from "../components/ConnectWallet";
 
 const Wallet = () => {
     const [nwc, setNwc] = useState<webln.NostrWebLNProvider | null>(null);
     const [balanceMsat, setBalanceMsat] = useState<number | null>(null);
     const [invoice, setInvoice] = useState<string | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [connectionUri, setConnectionUri] = useState<string>("");
     const [invoiceAmount, setInvoiceAmount] = useState<number>(0);
     const [invoiceDescription, setInvoiceDescription] = useState<string>("");
@@ -265,38 +267,7 @@ const Wallet = () => {
 
             <div className="rounded-lg shadow-sm w-full sm:w-xl flex flex-col items-center justify-center">
                 {!nwc ? (
-                    <div className="space-y-10 w-full sm:w-md">
-                        <div className="flex flex-col items-center justify-center">
-                            <div className="flex flex-row items-center gap-1">
-                                <FiZap className="text-orange-500 sm:text-3xl" />
-                                <h1 className="text-xl sm:text-4xl font-bold text-orange-500 flex flex-col items-left justify-start space-x-3">
-                                    Lightning Invoice
-                                </h1>
-                            </div>
-                            <p className="text-gray-400 text-md sm:text-md text-center">
-                                Fast and Secure Bitcoin Payments
-                            </p>
-                        </div>
-                        <div className="space-y-4 p-4 w-full border border-zinc-800">
-                            <h2 className="text-lg sm:text-xl font-semibold text-gray-400 text-center flex flex-row items-center justify-center">
-                                Connect Nostr Wallet
-                            </h2>
-                            <input
-                                type="text"
-                                placeholder="Enter connection URI (nostr+walletconnect://...)"
-                                value={connectionUri}
-                                onChange={(e) => setConnectionUri(e.target.value)}
-                                className="w-full p-2 sm:p-3 border text-gray-400 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                            />
-                            <button
-                                onClick={() => connectWallet(connectionUri)}
-                                disabled={isLoading}
-                                className="cursor-pointer w-full bg-orange-500 text-zinc-950 py-2 sm:py-3 rounded-md hover:bg-orange-600 uppercase transition font-semibold flex items-center justify-center text-sm sm:text-base"
-                            >
-                                {isLoading ? <FiLoader className="animate-spin" /> : "Connect"}
-                            </button>
-                        </div>
-                    </div>
+                    <ConnectWallet connectWallet={connectWallet} />
                 ) : (
                     <div className="w-full">
                         <div className="border rounded-md border-zinc-800 p-4 space-y-4 mb-20">
@@ -322,18 +293,15 @@ const Wallet = () => {
                                         ) : balanceMsat === 0 ? (
                                             <span className="text-gray-400">No balance available</span>
                                         ) : (
-                                            <div className="flex flex-col items-center">
-                                                <div>
-                                                    <span className="text-gray-300 font-bold text-4xl sm:text-5xl">
-                                                        {isBalanceHidden ? "•••••" : formatBalance(balanceMsat, btcToUsd).primary}
-                                                    </span>
-                                                </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="text-gray-300 font-bold text-4xl sm:text-5xl">
+                                                    {isBalanceHidden ? "•••••" : formatBalance(balanceMsat, btcToUsd).primary}
+                                                </span>
                                                 {!isBalanceHidden && (
-                                                    <div className="text-gray-400 text-sm sm:text-base mt-2">
+                                                    <div className="text-gray-400 flex flex-col items-end text-2xl sm:text-base mt-2">
                                                         <span>{formatBalance(balanceMsat, btcToUsd).secondary}</span>
-                                                        <br />
                                                         {isPriceLoading ? (
-                                                            <span>Fetching USD price...</span>
+                                                            <span>Updating USD price...</span>
                                                         ) : (
                                                             <span>{formatBalance(balanceMsat, btcToUsd).tertiary}</span>
                                                         )}
