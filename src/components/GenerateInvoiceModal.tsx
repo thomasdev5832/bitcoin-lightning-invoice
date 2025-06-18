@@ -332,7 +332,7 @@ const GenerateInvoiceModal = ({
                                 ? !usdAmount || parseFloat(usdAmount) <= 0 || isNaN(parseFloat(usdAmount))
                                 : !satsAmount || parseInt(satsAmount, 10) <= 0 || isNaN(parseInt(satsAmount, 10)))
                         }
-                        className={`w-full py-3 rounded-lg font-bold text-lg transition ${isDarkMode
+                        className={`w-full py-3 rounded-lg font-bold text-lg transition cursor-pointer ${isDarkMode
                             ? "bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-400 active:bg-orange-700 active:scale-95"
                             : "bg-orange-600 text-white hover:bg-orange-700 disabled:bg-orange-400 active:bg-orange-800 active:scale-95"
                             } disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-orange-500`}
@@ -346,7 +346,7 @@ const GenerateInvoiceModal = ({
                         {isLoading ? (
                             <FiLoader className="animate-spin h-6 w-6 mx-auto" />
                         ) : (
-                            "Create Invoice"
+                            "Generate Invoice"
                         )}
                     </button>
                 </div>

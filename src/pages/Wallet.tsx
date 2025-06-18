@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FiLoader, FiAlertCircle, FiEye, FiEyeOff, FiCheck } from "react-icons/fi";
 import { webln } from "@getalby/sdk";
 import GenerateInvoiceModal from "../components/GenerateInvoiceModal";
 import Transactions from "../components/Transactions";
 import Header from "../components/Header";
 import ConnectWallet from "../components/ConnectWallet";
+import MiniDashboard from "../components/MiniDashboard";
 
 const Wallet = () => {
     const [nwc, setNwc] = useState<webln.NostrWebLNProvider | null>(null);
@@ -17,7 +19,8 @@ const Wallet = () => {
     const [error, setError] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isBalanceHidden, setIsBalanceHidden] = useState<boolean>(true);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [isBalanceHidden, setIsBalanceHidden] = useState<boolean>(false);
     const [transactionsKey, setTransactionsKey] = useState<number>(0);
     const [btcToUsd, setBtcToUsd] = useState<number>(0);
     const [isPriceLoading, setIsPriceLoading] = useState<boolean>(true);
@@ -231,10 +234,10 @@ const Wallet = () => {
         setMonitoringInterval(intervalId);
     };
 
-    const toggleBalanceVisibility = () => {
-        setIsBalanceHidden(!isBalanceHidden);
-        console.log("Balance visibility toggled:", !isBalanceHidden);
-    };
+    // const toggleBalanceVisibility = () => {
+    //     setIsBalanceHidden(!isBalanceHidden);
+    //     console.log("Balance visibility toggled:", !isBalanceHidden);
+    // };
 
     useEffect(() => {
         if (!isModalOpen && monitoringInterval) {
@@ -245,7 +248,7 @@ const Wallet = () => {
     }, [isModalOpen, monitoringInterval]);
 
     return (
-        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2 mt-[20%] sm:mt-[10%]">
+        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2 mt-[10%] sm:mt-[100px]">
             {nwc && (
                 <Header
                     nwc={nwc}
@@ -269,11 +272,10 @@ const Wallet = () => {
                 {!nwc ? (
                     <ConnectWallet connectWallet={connectWallet} />
                 ) : (
-                    <div className="w-full">
-                        <div className="border rounded-md border-zinc-800 p-4 space-y-4 mb-20">
+                    <div className="w-full flex flex-col gap-4">
+                        <div className="border rounded-md border-zinc-800 p-4 space-y-4">
                             <div className="bg-zinc-950 relative">
-                                <div className="flex flex-row items-center justify-start">
-                                    <label className="text-gray-400 font-medium text-left text-xs uppercase">Balance</label>
+                                {/* <div className="flex flex-row items-center justify-start">
                                     <button
                                         onClick={toggleBalanceVisibility}
                                         className="cursor-pointer m-1 text-gray-400 hover:text-orange-500 transition"
@@ -281,9 +283,9 @@ const Wallet = () => {
                                     >
                                         {isBalanceHidden ? <FiEyeOff size={20} /> : <FiEye size={20} />}
                                     </button>
-                                </div>
+                                </div> */}
                                 <div className="flex items-center justify-center gap-4 flex-col sm:flex-row">
-                                    <div className="text-gray-700 font-medium text-center mt-2">
+                                    <div className="text-gray-700 font-medium text-center">
                                         {isLoading ? (
                                             <span className="flex items-center justify-center my-6">
                                                 <FiLoader className="text-orange-500 animate-spin text-2xl sm:text-2xl" />
@@ -294,11 +296,11 @@ const Wallet = () => {
                                             <span className="text-gray-400">No balance available</span>
                                         ) : (
                                             <div className="flex flex-col items-end">
-                                                <span className="text-gray-300 font-bold text-4xl sm:text-5xl">
+                                                <span className="text-gray-300 font-bold text-3xl sm:text-4xl">
                                                     {isBalanceHidden ? "•••••" : formatBalance(balanceMsat, btcToUsd).primary}
                                                 </span>
                                                 {!isBalanceHidden && (
-                                                    <div className="text-gray-400 flex flex-col items-end text-2xl sm:text-base mt-2">
+                                                    <div className="text-gray-400 flex flex-col items-end text-xl sm:text-base mt-2">
                                                         <span>{formatBalance(balanceMsat, btcToUsd).secondary}</span>
                                                         {isPriceLoading ? (
                                                             <span>Updating USD price...</span>
@@ -319,6 +321,7 @@ const Wallet = () => {
                                 Receive payment
                             </button>
                         </div>
+                        <MiniDashboard nwc={nwc} btcToUsd={btcToUsd} />
                         <Transactions key={transactionsKey} nwc={nwc} />
                     </div>
                 )}

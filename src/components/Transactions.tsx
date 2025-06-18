@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiLoader, FiAlertCircle, FiZap } from "react-icons/fi";
 import { webln } from "@getalby/sdk";
+import { MdOutlineSwapVert } from "react-icons/md";
 
 interface Transaction {
     id: string;
@@ -84,8 +85,11 @@ const Transactions = ({ nwc }: TransactionsProps) => {
     }, [nwc]);
 
     return (
-        <div className="mt-6 w-full">
-            <h3 className="text-xs font-semibold text-gray-400 mb-2 ml-1">Recent Transactions</h3>
+        <div className="w-full">
+            <div className="flex flex-row items-center mb-2">
+                <MdOutlineSwapVert className="text-orange-500 text-lg" />
+                <h3 className="text-sm font-semibold text-gray-400">Recent Transactions</h3>
+            </div>
             {isLoading ? (
                 <div className="flex justify-center">
                     <FiLoader className="animate-spin text-orange-500 text-2xl" />
