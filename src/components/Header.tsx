@@ -33,16 +33,18 @@ function Header({ nwc, isLoading, checkBalance, setNwc, setConnectionUri, setBal
     return (
         <header className="fixed top-0 left-0 w-full bg-zinc-950 shadow-md z-10">
             <div className="flex items-center justify-between px-4 py-2 sm:px-6 sm:py-4">
-                <h1 className="text-xl font-black text-gray-900 flex flex-row items-center justify-start gap-1">
-                    <FiZap className="text-orange-500" />
-                    {/* <span className="text-orange-500">Lightning Invoice</span> */}
-                </h1>
+                <div className="flex flex-row items-center">
+                    <FiZap className="text-orange-500 text-lg" />
+                    <h1 className="text-lg sm:text-lg font-bold text-white">
+                        NWCPay
+                    </h1>
+                </div>
                 {nwc && (
                     <div className="flex items-center justify-end gap-4">
                         <div className="flex items-center space-x-2">
                             <div className="flex flex-row items-center justify-center gap-2">
                                 <div className="relative">
-                                    <div className="h-2 w-2 bg-orange-400 rounded-full animate-pulse-with-trail"></div>
+                                    <div className="h-2 w-2 bg-orange-500 rounded-full animate-pulse-with-trail"></div>
                                 </div>
                                 <p className="text-gray-400 font-bold text-[10px] sm:text-xs uppercase">Nostr Wallet Connected</p>
                             </div>

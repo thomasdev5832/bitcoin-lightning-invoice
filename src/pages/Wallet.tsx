@@ -316,7 +316,7 @@ const Wallet = () => {
                                 onClick={() => setIsModalOpen(true)}
                                 className="cursor-pointer w-full bg-orange-500 text-zinc-950 py-4 rounded-md hover:bg-orange-600 uppercase transition font-bold text-xl"
                             >
-                                Create Invoice
+                                Receive payment
                             </button>
                         </div>
                         <Transactions key={transactionsKey} nwc={nwc} />
