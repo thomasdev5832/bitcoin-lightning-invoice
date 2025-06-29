@@ -203,8 +203,11 @@ const MiniDashboard = ({ nwc, btcToUsd }: MiniDashboardProps) => {
         if (active && payload && payload.length) {
             return (
                 <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-2 shadow-lg">
-                    <p className="text-gray-300 text-xs">{`${label}`}</p>
-                    <p className="text-orange-400 text-xs font-medium">
+                    {/* <p className="text-gray-300 text-xs">{`${label}`}</p> */}
+                    <p className={`text-xs font-medium ${payload[0].dataKey === 'count'
+                        ? 'text-orange-400'  // Cor laranja para Transactions
+                        : 'text-green-400'   // Cor verde para Revenue
+                        }`}>
                         {`${payload[0].dataKey === 'count' ? 'Transactions' : 'Revenue'}: ${payload[0].value}${payload[0].dataKey === 'revenue' ? ' sats' : ''}`}
                     </p>
                 </div>
