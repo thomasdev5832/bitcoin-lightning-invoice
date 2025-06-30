@@ -1,10 +1,9 @@
 function Logo() {
     return (
-        <div className="flex flex-row items-center justify-center bg-gradient-to-r from-[#fd7014] to-orange-500 p-10 rounded-2xl">
-
+        <div className="flex flex-row items-center justify-center">
             <div className="">
                 <svg
-                    className="w-24 h-24"
+                    className="w-18 h-18"
                     viewBox="0 0 80.76923076923077 116.82287105705548"
                     xmlns="http://www.w3.org/2000/svg"
                 >
@@ -19,8 +18,8 @@ function Logo() {
                 </svg>
             </div>
             <div className="flex flex-col items-center justify-center space-y-2">
-                <p className="text-white text-7xl font-anton tracking-wide">NWCPay</p>
-                <p className="text-white text-xs font-bold font-manrope uppercase tracking-widest">Fast bitcoin payments</p>
+                <p className="text-white text-5xl font-anton tracking-wide">NWCPay</p>
+                <p className="text-white text-[9px] font-bold font-manrope uppercase tracking-widest shadow-2xl">Fast bitcoin payments</p>
             </div>
         </div>
     )
