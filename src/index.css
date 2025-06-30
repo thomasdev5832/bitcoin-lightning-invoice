@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import "tailwindcss";
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Manrope, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -9,6 +11,19 @@
   text-rendering         : optimizeLegibility;
   -webkit-font-smoothing : antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  --font-family-anton  : 'Anton', sans-serif;
+  --font-family-manrope: 'Manrope', sans-serif;
+}
+
+@utility font-anton {
+  font-family: var(--font-family-anton);
+}
+
+@utility font-manrope {
+  font-family: var(--font-family-manrope);
 }
 
 @keyframes loadingDots {
