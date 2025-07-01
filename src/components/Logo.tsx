@@ -18,8 +18,8 @@ function Logo() {
                 </svg>
             </div>
             <div className="flex flex-col items-center justify-center space-y-2">
-                <p className="text-white text-5xl font-anton tracking-wide">NWCPay</p>
-                <p className="text-white text-[9px] font-bold font-manrope uppercase tracking-widest shadow-2xl">Fast bitcoin payments</p>
+                <p className="text-white text-5xl font-anton tracking-wide mt-2">NWCPay</p>
+                <p className="text-white text-[10px] font-black uppercase tracking-widest shadow-2xl">Fast bitcoin payments</p>
             </div>
         </div>
     )

@@ -50,7 +50,7 @@ export default function ConnectWallet({ connectWallet }: { connectWallet: (uri: 
                     </p>
                     <input
                         type="password"
-                        placeholder="Paste your wallet link here (starts with nostr+walletconnect://)"
+                        placeholder="NWC URI (starts with nostr+walletconnect://)"
                         value={connectionUri}
                         onChange={(e) => setConnectionUri(e.target.value)}
                         className="w-full p-2 sm:p-3 border text-gray-400 border-gray-700 rounded-md bg-black focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -98,12 +98,12 @@ export default function ConnectWallet({ connectWallet }: { connectWallet: (uri: 
                     </div>
 
                     {/* Optional Demo Mode */}
-                    <button
+                    {/* <button
                         onClick={handleDemoConnect}
                         className="text-sm text-gray-500 hover:text-orange-500 w-full text-center mt-2 cursor-pointer"
                     >
                         🎯 Try without a wallet (demo mode)
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

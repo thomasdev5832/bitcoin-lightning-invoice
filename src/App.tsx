@@ -1,15 +1,19 @@
+// src/App.tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { WalletProvider } from "./contexts/ContextWallet";
 import Wallet from "./pages/Wallet";
+import ConnectPage from "./pages/ConnectPage";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className="bg-zinc-950 flex flex-col items-center justify-center gap-6 sm:gap-10 p-4">
+    <WalletProvider>
+      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Wallet />} />
+          <Route path="/" element={<ConnectPage />} />
+          <Route path="/wallet" element={<Wallet />} />
         </Routes>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </WalletProvider>
   );
 };
 
