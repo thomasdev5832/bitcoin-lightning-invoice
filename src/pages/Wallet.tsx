@@ -262,7 +262,7 @@ const Wallet = () => {
     }
 
     return (
-        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2">
+        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center">
             <Header isLoading={isLoading} checkBalance={checkBalance} />
 
             {paymentNotification && (
