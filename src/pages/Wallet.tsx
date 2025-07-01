@@ -262,7 +262,7 @@ const Wallet = () => {
     }
 
     return (
-        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2 mt-[10%] sm:mt-[100px]">
+        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2">
             <Header isLoading={isLoading} checkBalance={checkBalance} />
 
             {paymentNotification && (
@@ -308,7 +308,7 @@ const Wallet = () => {
                         </div>
                         <button
                             onClick={() => setIsModalOpen(true)}
-                            className="cursor-pointer w-full bg-orange-500 text-zinc-950 py-4 rounded-md hover:bg-orange-600 uppercase transition font-bold text-xl"
+                            className="cursor-pointer w-full bg-orange-500 text-white font-anton tracking-widest py-4 rounded-md hover:bg-orange-600 uppercase transition font-bold text-xl"
                         >
                             Receive payment
                         </button>

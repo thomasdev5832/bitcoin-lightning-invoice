@@ -30,22 +30,22 @@ export default function ConnectWallet({ connectWallet }: { connectWallet: (uri: 
     };
 
     return (
-        <div className="rounded-lg shadow-sm flex flex-col items-center justify-center bg-gradient-to-b from-zinc-900 to-zinc-900">
-            <div className="space-y-4 mb-4 w-full sm:w-md">
+        <div className="w-full rounded-lg shadow-sm flex flex-col items-center justify-center">
+            <div className="space-y-4 mb-4 w-full sm:w-md flex flex-col items-center justify-center">
                 {/* Header */}
-                <div className="flex flex-col items-center justify-center gap-2 pt-10 pb-10 bg-orange-500 rounded-t-lg">
-                    <div className="flex flex-row items-center">
+                <div className="flex flex-col items-center justify-center gap-2 pt-10 pb-10 px-10 bg-orange-500 rounded-lg w-fit">
+                    <div className="flex flex-row items-center mr-4">
                         <Logo />
                     </div>
                 </div>
 
                 {/* Connection Section */}
-                <div className="space-y-4 p-6 w-full ">
+                <div className="space-y-4 p-6 w-full flex flex-col items-center">
                     <div className="flex flex-row items-center justify-center gap-2">
                         <LuPlugZap className="text-orange-500 w-6 h-6" />
-                        <h2 className="text-white text-xl font-semibold">Connect Lightning Wallet</h2>
+                        <h2 className="text-white text-lg font-semibold">Connect Lightning Wallet</h2>
                     </div>
-                    <p className="text-sm text-zinc-300 font-semibold text-center">
+                    <p className="text-xs text-zinc-400 font-semibold text-center">
                         Paste your wallet link(NWC URI) below.<br /> You can generate it using <strong>Alby</strong>.
                     </p>
                     <input
@@ -53,15 +53,29 @@ export default function ConnectWallet({ connectWallet }: { connectWallet: (uri: 
                         placeholder="NWC URI (starts with nostr+walletconnect://)"
                         value={connectionUri}
                         onChange={(e) => setConnectionUri(e.target.value)}
-                        className="w-full p-2 sm:p-3 border text-gray-400 border-gray-700 rounded-md bg-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        className="w-full p-2 sm:p-3 border text-gray-400 border-2 border-zinc-700 rounded-md bg-black focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
+
+                    <div className="w-full flex justify-between text-xs font-semibold text-gray-400 px-2">
+                        <a
+                            href="https://nwc.getalby.com/apps"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-orange-500 underline"
+                        >
+                            How to generate in Alby?
+                        </a>
+                        <button onClick={handlePaste} className="hover:text-orange-500 flex items-center gap-1 cursor-pointer">
+                            <FiClipboard /> Paste from clipboard
+                        </button>
+                    </div>
 
                     {/* Connect Button */}
                     <button
                         onClick={handleConnect}
                         disabled={!isValidUri || isLoading}
                         className={`cursor-pointer w-full py-4 rounded-md uppercase transition font-semibold flex items-center justify-center text-sm sm:text-base ${!isValidUri || isLoading
-                            ? "bg-gray-700 text-gray-400 cursor-not-allowed"
+                            ? "bg-zinc-700 text-gray-400 cursor-not-allowed"
                             : "bg-orange-500 text-zinc-950 hover:bg-orange-600"
                             }`}
                     >
@@ -83,27 +97,15 @@ export default function ConnectWallet({ connectWallet }: { connectWallet: (uri: 
                         }
                     </button>
 
-                    <div className="flex justify-between text-xs text-gray-400">
-                        <a
-                            href="https://nwc.getalby.com/apps"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-orange-500 underline"
-                        >
-                            How to generate in Alby?
-                        </a>
-                        <button onClick={handlePaste} className="hover:text-orange-500 flex items-center gap-1 cursor-pointer">
-                            <FiClipboard /> Paste from clipboard
-                        </button>
-                    </div>
+
 
                     {/* Optional Demo Mode */}
-                    {/* <button
+                    <button
                         onClick={handleDemoConnect}
-                        className="text-sm text-gray-500 hover:text-orange-500 w-full text-center mt-2 cursor-pointer"
+                        className="text-sm font-semibold text-zinc-400 hover:text-orange-500 w-fit text-center mt-4 cursor-pointer py-1 rounded-md underline"
                     >
-                        🎯 Try without a wallet (demo mode)
-                    </button> */}
+                        Try without a wallet (demo mode)
+                    </button>
                 </div>
             </div>
         </div>

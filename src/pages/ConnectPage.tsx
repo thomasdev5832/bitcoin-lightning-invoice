@@ -15,8 +15,8 @@ const ConnectPage = () => {
     }, [nwc, navigate]);
 
     return (
-        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center p-2 sm:mt-[100px]">
-            <div className="rounded-lg shadow-sm w-full sm:w-xl flex flex-col items-center justify-center">
+        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center pt-[20%] sm:pt-[10%]">
+            <div className="rounded-lg shadow-sm w-full sm:w-fit flex flex-col items-center justify-center px-2">
                 <ConnectWallet connectWallet={useWallet().connectWallet} />
             </div>
         </div>

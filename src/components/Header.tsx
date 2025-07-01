@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiZap, FiLoader, FiRefreshCw, FiSettings, FiLogOut } from "react-icons/fi";
+import { FiLoader, FiRefreshCw, FiSettings, FiLogOut } from "react-icons/fi";
 import { useWallet } from "../contexts/ContextWallet";
 import { useNavigate } from "react-router-dom";
 
@@ -18,8 +18,8 @@ function Header({ isLoading, checkBalance }: {
     };
 
     return (
-        <header className="fixed top-0 left-0 w-full bg-zinc-950 shadow-md z-10">
-            <div className="flex items-center justify-between px-4 py-2 sm:px-6 sm:py-4">
+        <header className=" w-full bg-zinc-950 shadow-md z-10">
+            <div className="flex items-start justify-between px-0 py-2 sm:px-6 sm:py-4">
                 <div className="flex flex-row items-center bg-orange-500 p-1 px-2 rounded-sm">
                     <svg className="w-5 h-5" viewBox="0 0 80.76923076923077 116.82287105705548">
                         <g transform="translate(-18.144373456698258, -0.27794033690228215) scale(1.1727437992501784)"
@@ -29,7 +29,7 @@ function Header({ isLoading, checkBalance }: {
                             </path>
                         </g>
                     </svg>
-                    <h3 className="text-white font-anton">NWCPay</h3>
+                    <h3 className="text-white font-anton pr-1">NWCPay</h3>
                 </div>
                 {nwc && (
                     <div className="flex items-center justify-end gap-4">
