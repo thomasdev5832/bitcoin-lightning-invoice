@@ -165,11 +165,11 @@ const GenerateInvoiceModal = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fade-in">
+        <div className="fixed inset-0 bg-zinc-950 bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fade-in">
             {/* Theme Toggle Button */}
             <button
                 onClick={toggleTheme}
-                className={`absolute top-4 left-4 p-2 rounded-full transition ${isDarkMode ? "bg-zinc-800 text-gray-300 hover:bg-zinc-700" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                className={`absolute top-4 left-4 p-2 rounded-full transition cursor-pointer ${isDarkMode ? "bg-zinc-800 text-gray-300 hover:bg-zinc-700" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                     }`}
                 aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
@@ -179,7 +179,7 @@ const GenerateInvoiceModal = ({
             {/* Close Button */}
             <button
                 onClick={onClose}
-                className={`absolute top-4 right-4 p-2 rounded-full transition ${isDarkMode ? "bg-zinc-800 text-gray-300 hover:bg-zinc-700" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                className={`absolute top-4 right-4 p-2 rounded-full transition cursor-pointer ${isDarkMode ? "bg-zinc-800 text-gray-300 hover:bg-zinc-700" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                     }`}
                 aria-label="Close modal"
             >
@@ -189,7 +189,7 @@ const GenerateInvoiceModal = ({
             {invoice ? (
                 <div
                     className={`p-6 rounded-lg shadow-lg border animate-slide-up sm:w-xs flex flex-col ${isDarkMode
-                        ? "bg-zinc-950 text-gray-300 border-zinc-700"
+                        ? "bg-zinc-900 text-gray-300 border-zinc-700"
                         : "bg-gray-50 text-gray-700 border-gray-200"
                         }`}
                 >
@@ -209,14 +209,19 @@ const GenerateInvoiceModal = ({
                         />
                     </div>
 
-                    <div className="text-sm space-y-2">
-                        <p>
+                    <div
+                        className={`p-4 rounded-lg shadow-lg border animate-slide-up flex flex-col ${isDarkMode
+                            ? "bg-zinc-900 text-gray-300 border-zinc-700"
+                            : "bg-gray-50 text-gray-700 border-gray-200"
+                            }`}
+                    >
+                        <p className="text-lg font-semibold">
                             <strong>Amount:</strong> {invoiceAmount.toLocaleString()} sats
                         </p>
-                        <p>
+                        <p className="text-xs mb-1">
                             <strong>Description:</strong> {invoiceDescription || "None"}
                         </p>
-                        <p className="break-all text-[10px] text-gray-400">
+                        <p className="break-all text-[10px]">
                             <strong>Invoice:</strong> {invoice}
                         </p>
                     </div>
@@ -251,7 +256,7 @@ const GenerateInvoiceModal = ({
             ) : (
                 <div
                     className={`p-6 rounded-lg shadow-lg w-full max-w-md border animate-slide-up ${isDarkMode
-                        ? "bg-zinc-950 text-gray-300 border-zinc-700"
+                        ? "bg-zinc-900 text-gray-300 border-zinc-700"
                         : "bg-gray-100 text-gray-700 border-gray-200"
                         }`}
                 >
@@ -290,10 +295,10 @@ const GenerateInvoiceModal = ({
                             <button
                                 key={key}
                                 onClick={(e) => handleKeyPress(key, e)}
-                                className={`text-xl py-3 font-bold rounded-lg transition transform ${isDarkMode
+                                className={`text-xl py-3 font-bold rounded-lg transition transform cursor-pointer ${isDarkMode
                                     ? `bg-zinc-800 text-gray-200 hover:bg-zinc-700 hover:scale-105 active:bg-zinc-600 active:scale-95 active:shadow-inner ${clickedKeys.includes(key) ? "ring-2 ring-orange-500" : ""
                                     }`
-                                    : `bg-white text-gray-900 hover:bg-gray-100 hover:scale-105 active:bg-gray-200 active:scale-95 active:shadow-inner ${clickedKeys.includes(key) ? "ring-2 ring-orange-500" : ""
+                                    : `bg-white text-gray-900 hover:bg-zinc-300 hover:scale-105 active:bg-gray-200 active:scale-95 active:shadow-inner ${clickedKeys.includes(key) ? "ring-2 ring-orange-500" : ""
                                     }`
                                     } focus:outline-none focus:ring-2 focus:ring-orange-500 ${key === "." && inputMode === "sats" ? "opacity-50 cursor-not-allowed" : ""
                                     }`}
@@ -315,7 +320,7 @@ const GenerateInvoiceModal = ({
                         <input
                             id="invoice-description"
                             type="text"
-                            placeholder="e.g., Coca-Cola"
+                            placeholder="e.g., Orange Juice"
                             onChange={(e) => onCreateInvoice.description(e.target.value)}
                             className={`w-full p-2 rounded-lg border transition ${isDarkMode
                                 ? "bg-zinc-900 text-gray-200 border-zinc-600 focus:ring-orange-500"
@@ -333,8 +338,8 @@ const GenerateInvoiceModal = ({
                                 : !satsAmount || parseInt(satsAmount, 10) <= 0 || isNaN(parseInt(satsAmount, 10)))
                         }
                         className={`w-full py-3 rounded-lg font-bold text-lg transition cursor-pointer ${isDarkMode
-                            ? "bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-400 active:bg-orange-700 active:scale-95"
-                            : "bg-orange-600 text-white hover:bg-orange-700 disabled:bg-orange-400 active:bg-orange-800 active:scale-95"
+                            ? "bg-orange-500 text-white hover:bg-orange-600 disabled:bg-zinc-700 active:bg-orange-700 active:scale-95"
+                            : "bg-orange-600 text-white hover:bg-orange-700 disabled:text-zinc-800 disabled:bg-zinc-400 active:bg-orange-800 active:scale-95"
                             } disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-orange-500`}
                         aria-disabled={
                             isLoading ||

@@ -262,7 +262,7 @@ const Wallet = () => {
     }
 
     return (
-        <div className="min-h-screen w-full bg-zinc-950 flex flex-col items-center">
+        <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center">
             <Header isLoading={isLoading} checkBalance={checkBalance} />
 
             {paymentNotification && (
@@ -281,7 +281,7 @@ const Wallet = () => {
             <div className="rounded-lg shadow-sm w-full sm:w-xl flex flex-col items-center justify-center px-4">
                 <div className="w-full flex flex-col gap-4">
                     <div className="border rounded-md border-zinc-800 p-4 space-y-4">
-                        <div className="bg-zinc-950 relative">
+                        <div className="bg-zinc-900 relative">
                             <div className="flex items-center justify-center gap-4 flex-col sm:flex-row">
                                 <div className="text-gray-700 font-medium text-center">
                                     {balanceMsat === null ? (

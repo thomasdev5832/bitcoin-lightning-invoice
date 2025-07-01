@@ -23,7 +23,7 @@ function Header({ isLoading, checkBalance }: {
     };
 
     return (
-        <header className="w-full bg-zinc-950 shadow-md z-10 relative">
+        <header className="w-full bg-zinc-900 shadow-md z-10 relative">
             <div className="flex items-center justify-between p-4">
                 <div className="flex flex-row items-center bg-orange-500 p-1 px-2 rounded-sm">
                     <svg className="w-5 h-5" viewBox="0 0 80.76923076923077 116.82287105705548">
@@ -49,7 +49,7 @@ function Header({ isLoading, checkBalance }: {
                         <button
                             onClick={() => checkBalance()}
                             disabled={isLoading}
-                            className="cursor-pointer p-2 sm:p-3 bg-zinc-950 rounded-md hover:bg-zinc-900 transition flex items-center justify-center"
+                            className="cursor-pointer p-2 bg-zinc-900 rounded-md hover:bg-zinc-800 transition flex items-center justify-center"
                         >
                             {isLoading ? <FiLoader className="text-gray-400 animate-spin text-sm sm:text-base" /> : <FiRefreshCw className="text-gray-400 text-sm sm:text-base" />}
                         </button>
@@ -57,10 +57,10 @@ function Header({ isLoading, checkBalance }: {
                         {/* Menu Toggle Button - seguindo o padrão do primeiro exemplo */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="relative z-60 w-8 h-8 flex items-center justify-center group focus:outline-none cursor-pointer"
+                            className="relative z-60 w-8 h-8 flex items-center justify-center group focus:outline-none cursor-pointer bg-zinc-900 rounded-md hover:bg-zinc-800 "
                             aria-label="Toggle navigation menu"
                         >
-                            <div className="relative w-5 h-4 flex flex-col justify-between items-center">
+                            <div className="relative w-5 h-4 flex flex-col justify-between items-cente">
                                 <span className={`w-full h-[2px] bg-gray-400 rounded-full transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[9px]' : 'translate-y-0'}`} />
                                 <span className={`w-full h-[2px] bg-gray-400 rounded-full transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
                                 <span className={`w-full h-[2px] bg-gray-400 rounded-full transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[5px]' : 'translate-y-0'}`} />

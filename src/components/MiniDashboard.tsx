@@ -227,7 +227,7 @@ const MiniDashboard = ({ nwc, btcToUsd }: MiniDashboardProps) => {
                     <select
                         value={selectedPeriod}
                         onChange={(e) => setSelectedPeriod(e.target.value as TimePeriod)}
-                        className="appearance-none bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 pr-8 text-gray-300 text-sm font-medium cursor-pointer focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 hover:border-zinc-600 transition-colors min-w-[140px]"
+                        className="appearance-none bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 pr-8 text-zinc-300 text-sm font-medium cursor-pointer focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 hover:border-zinc-600 transition-colors min-w-[140px]"
                         style={{
                             backgroundImage: 'none'
                         }}
@@ -236,7 +236,7 @@ const MiniDashboard = ({ nwc, btcToUsd }: MiniDashboardProps) => {
                             <option
                                 key={range.value}
                                 value={range.value}
-                                className="bg-zinc-950 text-gray-300 py-2 px-3 hover:bg-zinc-700"
+                                className="bg-zinc-900 text-zinc-300 font-semibold py-2 px-3 hover:bg-zinc-800"
                             >
                                 {range.label}
                             </option>
@@ -248,7 +248,7 @@ const MiniDashboard = ({ nwc, btcToUsd }: MiniDashboardProps) => {
 
             <div className="flex flex-row gap-4 w-full justify-between">
                 {/* Total Revenue Card */}
-                <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 w-full">
+                <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 w-full">
                     <div className="flex items-center justify-between mb-2">
                         <h3 className="text-gray-300 text-sm font-medium">Total Revenue</h3>
                         <FiTrendingUp className="text-gray-400 w-4 h-4" />
@@ -290,7 +290,7 @@ const MiniDashboard = ({ nwc, btcToUsd }: MiniDashboardProps) => {
                 </div>
 
                 {/* Total Transactions Card */}
-                <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 w-full">
+                <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 w-full">
                     <div className="flex items-center justify-between mb-2">
                         <h3 className="text-gray-300 text-sm font-medium">Total Transactions</h3>
                         <FiActivity className="text-gray-400 w-4 h-4" />

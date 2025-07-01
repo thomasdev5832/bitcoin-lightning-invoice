@@ -104,7 +104,7 @@ const Transactions = ({ nwc }: TransactionsProps) => {
             ) : (
                 <div className="space-y-3">
                     {transactions.map((tx) => (
-                        <div key={tx.id} className="flex items-center justify-between p-3 bg-zinc-950 hover:bg-zinc-900 transition duration-100 border border-zinc-900 rounded-sm">
+                        <div key={tx.id} className="flex items-center justify-between p-3 bg-zinc-900 hover:bg-zinc-800 transition duration-100 border border-zinc-900 rounded-sm cursor-pointer">
                             <div className="flex items-center gap-2">
                                 {/* <div className={`p-2 rounded-full ${tx.type === "incoming" ? "bg-green-500" : "bg-red-500"}`}>
                                 {tx.type === "incoming" ? <FiArrowDown className="text-white" /> : <FiArrowUp className="text-white" />}

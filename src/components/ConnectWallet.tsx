@@ -50,10 +50,10 @@ export default function ConnectWallet({ connectWallet }: { connectWallet: (uri: 
                     </p>
                     <input
                         type="password"
-                        placeholder="NWC URI (starts with nostr+walletconnect://)"
+                        placeholder="e.g., nostr+walletconnect://)"
                         value={connectionUri}
                         onChange={(e) => setConnectionUri(e.target.value)}
-                        className="w-full p-2 sm:p-3 text-gray-400 border-2 border-zinc-600 rounded-md bg-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        className="w-full p-2 sm:p-3 text-gray-400 border-2 border-zinc-600 rounded-md bg-zinc-950 focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
 
                     <div className="w-full flex justify-between text-xs font-semibold text-gray-400 px-2">
