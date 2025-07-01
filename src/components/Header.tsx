@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FiLoader, FiRefreshCw, FiSettings, FiLogOut } from "react-icons/fi";
 import { useWallet } from "../contexts/ContextWallet";
 import { useNavigate } from "react-router-dom";
+import Logo from "./Logo";
 
 function Header({ isLoading, checkBalance }: {
     isLoading: boolean;
@@ -63,8 +64,8 @@ function Header({ isLoading, checkBalance }: {
             {/* Settings Modal */}
             {isSettingsModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-                    <div className="bg-zinc-900 rounded-lg p-6 w-full max-w-sm mx-4">
-                        <div className="flex justify-between items-center mb-4">
+                    <div className="bg-zinc-900 rounded-lg p-6 w-full max-w-sm mx-4 flex flex-col items-center space-y-4">
+                        <div className="flex justify-between items-center mb-4 w-full">
                             <h2 className="text-lg font-semibold text-gray-200">Settings</h2>
                             <button
                                 onClick={() => setIsSettingsModalOpen(false)}
@@ -74,6 +75,11 @@ function Header({ isLoading, checkBalance }: {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
+                        </div>
+                        <div className="flex flex-col items-center justify-center w-fit">
+                            <div className="flex flex-row items-center mr-4">
+                                <Logo />
+                            </div>
                         </div>
                         <button
                             onClick={handleDisconnect}
