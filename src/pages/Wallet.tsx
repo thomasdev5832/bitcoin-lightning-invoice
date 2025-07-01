@@ -278,7 +278,7 @@ const Wallet = () => {
                 </div>
             )}
 
-            <div className="rounded-lg shadow-sm w-full sm:w-xl flex flex-col items-center justify-center">
+            <div className="rounded-lg shadow-sm w-full sm:w-xl flex flex-col items-center justify-center px-4">
                 <div className="w-full flex flex-col gap-4">
                     <div className="border rounded-md border-zinc-800 p-4 space-y-4">
                         <div className="bg-zinc-950 relative">

@@ -24,7 +24,7 @@ function Header({ isLoading, checkBalance }: {
 
     return (
         <header className="w-full bg-zinc-950 shadow-md z-10 relative">
-            <div className="flex items-center justify-between p-2">
+            <div className="flex items-center justify-between p-4">
                 <div className="flex flex-row items-center bg-orange-500 p-1 px-2 rounded-sm">
                     <svg className="w-5 h-5" viewBox="0 0 80.76923076923077 116.82287105705548">
                         <g transform="translate(-18.144373456698258, -0.27794033690228215) scale(1.1727437992501784)"
