@@ -179,6 +179,7 @@ const MiniDashboard = ({ nwc, btcToUsd }: MiniDashboardProps) => {
         if (nwc) {
             calculateMetrics();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [nwc, selectedPeriod]);
 
     const formatChangePercent = (percent: number): string => {
@@ -199,7 +200,7 @@ const MiniDashboard = ({ nwc, btcToUsd }: MiniDashboardProps) => {
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const CustomTooltip = ({ active, payload, label }: any) => {
+    const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
             return (
                 <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-2 shadow-lg">
