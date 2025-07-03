@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WalletProvider } from "./contexts/ContextWallet";
 import Wallet from "./pages/Wallet";
 import ConnectPage from "./pages/ConnectPage";
+import LandingPage from "./pages/LandingPage";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<ConnectPage />} />
           <Route path="/wallet" element={<Wallet />} />
+          <Route path="/welcome" element={<LandingPage />} />
         </Routes>
       </BrowserRouter>
     </WalletProvider>
