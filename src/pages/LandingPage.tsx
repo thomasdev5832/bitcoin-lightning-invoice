@@ -1,9 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { FiZap, FiCopy, FiRefreshCw, FiLoader, FiCheck, FiDollarSign, FiClock, FiShield, FiGlobe, FiGithub, FiMenu } from "react-icons/fi";
+import { FiZap, FiCopy, FiRefreshCw, FiLoader, FiCheck, FiClock, FiShield, FiGlobe, FiGithub, FiMenu, FiLock, FiSmartphone } from "react-icons/fi";
+import { MdCurrencyBitcoin } from "react-icons/md";
 import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
-import LogoLightningWhite from "../assets/img/NWC-BIG-NOBG.svg";
-import LogoLightningWhiteNoBg from "../assets/img/NWC-Logo-Lightning-White-No-bg.svg";
+import LogoLightningWhiteNoBg from "../assets/img/NWC-BIG-NOBG.svg";
+import LogoLightningOrangeNoBg from "../assets/img/NWC-BIG-Orange-NOBG.svg";
+import LogoLightningWhite from "../assets/img/NWC-Logo-Lightning-White-No-bg.svg";
+import LogoLightningOrange from "../assets/img/NWC-Logo-Lightning-Orange-No-bg.svg";
+import NWCWallet from "../assets/img/NWCPay-wallet.png";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -106,29 +110,29 @@ const LandingPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-zinc-900 text-white">
+        <div className="min-h-screen bg-zinc-900 text-white font-manrope">
             {/* Navigation Bar */}
-            <nav className="bg-orange-500 fixed w-full z-50">
+            <nav className="bg-white w-full z-50">
                 <div className="container mx-auto px-6 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                            <img src={LogoLightningWhite} className="h-8" alt="NWCPay Logo" />
+                            <img src={LogoLightningOrangeNoBg} className="h-10" alt="NWCPay Logo" />
                         </div>
 
-                        <div className="hidden md:flex items-center space-x-8 font-semibold">
-                            <a href="#features" className="hover:text-white hover:underline transition">Features</a>
-                            <a href="#security" className="hover:text-white hover:underline transition">Security</a>
-                            <a href="#opensource" className="hover:text-white hover:underline transition">Open Source</a>
+                        <div className="hidden md:flex text-orange-500 items-center space-x-8 font-semibold">
+                            <a href="#features" className="hover:text-orange-600 hover:underline decoration-2 underline-offset-4 transition duration-300">Features</a>
+                            <a href="#security" className="hover:text-orange-600  hover:underline decoration-2 underline-offset-4 transition duration-300">Security</a>
+                            <a href="#opensource" className="hover:text-orange-600  hover:underline decoration-2 underline-offset-4 transition duration-300">Open Source</a>
                             <button
-                                onClick={() => navigate("/app")}
-                                className="cursor-pointer bg-orange-600 border-2 hover:shadow-lg border-orange-600 text-white font-bold py-2 px-6 rounded-lg transition flex items-center"
+                                onClick={() => navigate("/")}
+                                className="cursor-pointer bg-orange-500 border-2 shadow-xl hover:shadow-lg hover:scale-105 border-orange-600 text-white font-bold py-2 px-6 rounded-lg transition flex items-center"
                             >
-                                <img src={LogoLightningWhiteNoBg} className="h-5" alt="Lightning Icon" /> App
+                                <img src={LogoLightningWhite} className="h-5" alt="Lightning Icon" />Launch App
                             </button>
                         </div>
 
                         <button
-                            className="md:hidden text-white"
+                            className="md:hidden text-orange-500"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
                             <FiMenu className="w-6 h-6" />
@@ -136,15 +140,15 @@ const LandingPage = () => {
                     </div>
 
                     {mobileMenuOpen && (
-                        <div className="md:hidden mt-4 pb-4 space-y-4">
+                        <div className="md:hidden mt-4 pb-4 space-y-4 flex flex-col items-center justify-center text-orange-500 font-bold">
                             <a href="#features" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Features</a>
                             <a href="#security" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Security</a>
                             <a href="#opensource" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Open Source</a>
                             <button
-                                onClick={() => navigate("/app")}
-                                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg transition flex items-center justify-center gap-2"
+                                onClick={() => navigate("/")}
+                                className="w-full cursor-pointer bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-bold py-2 px-6 rounded-lg transition flex items-center justify-center text-center"
                             >
-                                <FiZap /> Access App
+                                <img src={LogoLightningWhite} className="h-5" alt="Lightning Icon" />Launch App
                             </button>
                         </div>
                     )}
@@ -152,49 +156,40 @@ const LandingPage = () => {
             </nav>
 
             {/* Hero Section */}
-            <header className="relative overflow-hidden pt-24">
-                <div className="absolute inset-0 bg-gradient-to-b from-orange-500 to-orange-600 z-0"></div>
-                <div className="container mx-auto px-6 py-12 md:py-24 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-                        <div className="lg:w-1/2">
-                            <h1 className="text-4xl md:text-6xl font-black mb-6">Fast Bitcoin Payments</h1>
-                            <p className="text-lg text-zinc-100 font-semibold mb-8">
-                                A fast and simple, Nostr-powered Bitcoin payment tool built for global Lightning adoption. ⚡
+            <header className="relative overflow-hidden">
+                <div className="absolute inset-0 bg-white z-0"></div>
+                <div className="container mx-auto px-6 py-12 md:py-14 relative z-10">
+                    <div className="flex flex-col items-center gap-12">
+                        {/* Title and Text Content */}
+                        <div className="text-center">
+                            <h1 className="text-5xl text-orange-500 md:text-7xl font-black mb-6 w-full">Fast Bitcoin Payments</h1>
+                            <p className="text-lg md:text-xl text-zinc-700 font-semibold mb-6 max-w-4xl mx-auto">
+                                A fast and simple Bitcoin payment tool built for global Lightning adoption. ⚡
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4">
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <button
-                                    onClick={() => navigate("/app")}
-                                    className="bg-white hover:bg-orange-600 text-orange-500 hover:text-white font-bold py-4 px-8 rounded-lg text-lg transition flex items-center gap-2"
+                                    onClick={() => navigate("/")}
+                                    className="cursor-pointer shadow-lg bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-black py-2 px-10 rounded-lg transition flex items-center justify-center"
                                 >
-                                    <FiZap /> Try it Now
-                                </button>
-                                <button className="border border-orange-500 text-orange-500 hover:bg-orange-500/10 font-bold py-4 px-8 rounded-lg text-lg transition flex items-center gap-2">
-                                    <FiGithub /> View Code
+                                    <img src={LogoLightningWhite} className="h-5 mr-1" alt="Lightning Icon" /> Try It Now
                                 </button>
                             </div>
                         </div>
 
                         {/* iPhone Mockup */}
-                        <div className="lg:w-1/2 flex justify-center">
+                        <div className="flex justify-center">
                             <div className="relative w-[300px] h-[600px] bg-zinc-800 rounded-[40px] border-[12px] border-zinc-900 shadow-2xl overflow-hidden">
                                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[120px] h-[25px] bg-zinc-900 rounded-b-xl z-10"></div>
-
                                 <div className="h-full flex flex-col bg-zinc-900">
-
-
-                                    <div className="flex-1 overflow-y-auto p-4 pt-8 ">
+                                    <div className="flex-1 overflow-y-auto p-4 pt-8">
                                         <div className="flex flex-col h-full">
-                                            <div className="flex items-center justify-center gap-2 mb-4">
-
-                                            </div>
-
+                                            <div className="flex items-center justify-center gap-2 mb-4"></div>
                                             {invoice ? (
                                                 <div className="flex-1 flex flex-col items-center justify-center">
                                                     <div className="bg-zinc-800 rounded-lg p-6 text-center w-full max-w-xs">
                                                         <div className="text-zinc-400 mb-2">Invoice Generated</div>
                                                         <div className="text-3xl font-bold mb-1">{invoiceAmount.toLocaleString()} sats</div>
                                                         <div className="text-zinc-400 text-sm mb-6">≈ ${(invoiceAmount / satsPerUsd).toFixed(2)} USD</div>
-
                                                         <div className="mt-4 p-4 bg-white rounded-lg mx-auto w-[200px] h-[200px] flex items-center justify-center">
                                                             <QRCodeSVG
                                                                 value={invoice}
@@ -204,26 +199,23 @@ const LandingPage = () => {
                                                                 fgColor="#ffffff"
                                                             />
                                                         </div>
-
+                                                        <div className="text-start text-xs text-zinc-400 mt-2">
+                                                            Description: {invoiceDescription || "No description"}
+                                                        </div>
                                                         <button
                                                             onClick={() => navigator.clipboard.writeText(invoice)}
-                                                            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg mt-6 transition flex items-center justify-center gap-2"
+                                                            className="cursor-pointer w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg mt-6 transition flex items-center justify-center gap-2"
                                                         >
                                                             <FiCopy /> Copy Invoice
                                                         </button>
-
-                                                        <div className="text-center text-xs text-zinc-400 mt-2">
-                                                            {invoiceDescription || "No description"}
-                                                        </div>
                                                     </div>
-
                                                     <button
                                                         onClick={() => {
                                                             setInvoice(null);
                                                             setUsdAmount("");
                                                             setSatsAmount("");
                                                         }}
-                                                        className="mt-4 text-orange-500 text-sm hover:underline"
+                                                        className="mt-4 cursor-pointer text-orange-500 text-sm hover:underline decoration-2 underline-offset-4"
                                                     >
                                                         Create New Invoice
                                                     </button>
@@ -247,51 +239,40 @@ const LandingPage = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                     <div className="grid grid-cols-3 gap-2 mb-4">
                                                         {[1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "←"].map((key) => (
                                                             <button
                                                                 key={key}
                                                                 onClick={() => handleKeyPress(key.toString())}
-                                                                className={`py-3 rounded-lg font-bold text-lg transition ${clickedKeys.includes(key.toString())
-                                                                    ? "bg-orange-500 text-white scale-95"
-                                                                    : "bg-zinc-800 hover:bg-zinc-700"}`}
+                                                                className={`py-3 rounded-lg font-bold text-lg transition cursor-pointer ${clickedKeys.includes(key.toString()) ? "bg-orange-500 text-white scale-95" : "bg-zinc-800 hover:bg-zinc-700"
+                                                                    }`}
                                                                 disabled={key === "." && inputMode === "sats"}
                                                             >
                                                                 {key}
                                                             </button>
                                                         ))}
                                                     </div>
-
                                                     <div className="mb-4">
                                                         <label className="block text-sm text-zinc-400 mb-1">Description (optional)</label>
                                                         <input
                                                             type="text"
                                                             placeholder="e.g. Coffee"
                                                             onChange={(e) => setInvoiceDescription(e.target.value)}
-                                                            className="w-full p-2 bg-zinc-800 rounded-lg border border-zinc-700 focus:ring-2 focus:ring-orange-500"
+                                                            className="w-full p-2 bg-zinc-800 rounded-lg border border-zinc-700 focus:ring-2 outline-none focus:ring-orange-500"
                                                         />
                                                     </div>
-
                                                     <button
                                                         onClick={generateInvoice}
                                                         disabled={isLoading || (!usdAmount && !satsAmount)}
-                                                        className={`w-full py-3 rounded-lg font-bold text-lg transition ${isLoading
-                                                            ? "bg-zinc-700"
-                                                            : "bg-orange-500 hover:bg-orange-600"}`}
+                                                        className={`w-full py-3 rounded-lg font-bold text-lg transition cursor-pointer ${isLoading ? "bg-zinc-700" : "bg-orange-500 hover:bg-orange-600"
+                                                            }`}
                                                     >
-                                                        {isLoading ? (
-                                                            <FiLoader className="animate-spin mx-auto" />
-                                                        ) : (
-                                                            "Generate Invoice"
-                                                        )}
+                                                        {isLoading ? <FiLoader className="animate-spin mx-auto" /> : "Generate Invoice"}
                                                     </button>
                                                 </>
                                             )}
                                         </div>
                                     </div>
-
                                     <div className="pb-2 flex justify-center">
                                         <div className="w-[100px] h-1 bg-zinc-700 rounded-full"></div>
                                     </div>
@@ -302,70 +283,135 @@ const LandingPage = () => {
                 </div>
             </header>
 
-            {/* Features Section */}
-            <section id="features" className="py-20 bg-zinc-800/30">
-                <div className="container mx-auto px-6">
-                    <div className="grid md:grid-cols-2 gap-12">
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <FiDollarSign className="text-orange-500 text-2xl" />
-                                <h2 className="text-2xl font-bold">Accept Bitcoin Payments with Ease</h2>
-                            </div>
-                            <p className="text-zinc-300 mb-6">
-                                NWCPay turns any browser into a Lightning payment terminal. No custodians. No installations. No complexity.
-                            </p>
-                            <p className="text-zinc-300">
-                                Just connect your Lightning wallet via NWC (like Alby), generate an invoice, and receive sats instantly.
+            {/* Features and Security Section */}
+            <section id="features-security" className="py-24 bg-zinc-900">
+                <div className="container mx-auto px-6 max-w-6xl">
+
+
+                    {/* Highlight Features */}
+                    <div className="flex flex-col md:flex-row gap-8 mb-16">
+                        <div className="flex-1 p-6 rounded-lg text-center">
+                            <FiZap className="text-orange-500 text-4xl mx-auto mb-4" />
+                            <h3 className="text-xl font-semibold text-white mb-2">Lightning-Fast Payments</h3>
+                            <p className="text-zinc-400">
+                                Experience instant transactions with the Lightning Network, optimized for speed and efficiency.
                             </p>
                         </div>
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <FiGlobe className="text-orange-500 text-2xl" />
-                                <h2 className="text-2xl font-bold">Built for Merchants and Service Providers</h2>
+
+                        <div className="flex-1 p-6 rounded-lg text-center">
+                            <FiSmartphone className="text-orange-500 text-4xl mx-auto mb-4" />
+                            <h3 className="text-xl font-semibold text-white mb-2">Use on Any Mobile Device</h3>
+                            <p className="text-zinc-400">
+                                Access NWCPay from any smartphone or tablet with an internet connection, making payments seamless on the go.
+                            </p>
+                        </div>
+
+                        <div className="flex-1 p-6 rounded-lg text-center">
+                            <FiGlobe className="text-orange-500 text-4xl mx-auto mb-4" />
+                            <h3 className="text-xl font-semibold text-white mb-2">Decentralized Freedom</h3>
+                            <p className="text-zinc-400">
+                                Operate without intermediaries, giving you true financial sovereignty in a decentralized ecosystem.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Feature 1: Accept Bitcoin Payments */}
+                    <div className="flex-1 p-8 sm:p-20 rounded-lg flex gap-10 flex-col md:flex-row items-start bg-white text-zinc-900">
+                        {/* Text Content */}
+                        <div className="flex-1 w-full md:w-1/2 flex flex-col gap-4">
+                            <div className="flex items-center gap-1">
+                                <MdCurrencyBitcoin className="text-orange-500 w-20 h-20" />
+                                <h2 className="text-2xl font-bold tracking-tigh  sm:whitespace-nowrap">Accept Bitcoin Payments in Seconds</h2>
                             </div>
-                            <p className="text-zinc-300 mb-4">Designed for everyday use by:</p>
-                            <ul className="grid grid-cols-2 gap-2 text-zinc-300">
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Retail stores</li>
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Freelancers</li>
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Restaurants</li>
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Cafés</li>
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Barbershops</li>
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Street vendors</li>
+                            <p className="text-lg leading-relaxed">
+                                <span className="font-black">NWCPay</span> turns any modern browser into a powerful Lightning payment terminal. No custodians, no complex setups, and no software installations required.
+                            </p>
+                            <p className="text-lg leading-relaxed mb-4">
+                                Connect your Lightning wallet using Nostr Wallet Connect (e.g., Alby), create an invoice, and receive satoshis instantly with full control over your funds.
+                            </p>
+                            <button
+                                onClick={() => navigate("/")}
+                                className="cursor-pointer shadow-lg bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-black py-2 px-10 rounded-lg transition flex items-center justify-center w-fit"
+                            >
+                                <img src={LogoLightningWhite} className="h-5 mr-1" alt="Lightning Icon" /> Sign up in minutes
+                            </button>
+                        </div>
+                        {/* iPhone Mockup with Image */}
+                        <div className="flex-1 w-full md:w-1/2 flex justify-center">
+                            <div className="relative w-[250px] h-[500px] bg-zinc-900 rounded-[40px] border-[10px] border-zinc-800 shadow-2xl overflow-hidden">
+                                <div className="h-full w-full">
+                                    <img
+                                        src={NWCWallet}
+                                        alt="NWCPay Bitcoin Payment Interface"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Feature 2: Tailored for Merchants */}
+                    <div className="flex-1 p-20 rounded-lg mb-16">
+                        <div className="flex items-center gap-4 mb-6">
+                            <FiGlobe className="text-orange-500 w-8 h-8" />
+                            <h2 className="text-4xl font-bold tracking-tight text-white">Empowering Everyone to Accept Bitcoin Seamlessly</h2>
+                        </div>
+                        <p className="text-zinc-300 text-lg leading-relaxed mb-4">
+                            Designed for seamless daily use, NWCPay empowers a wide range of professionals and small businesses to accept Bitcoin effortlessly:
+                        </p>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-zinc-300 text-lg">
+                            {[
+                                "Retail stores",
+                                "Freelancers",
+                                "Restaurants",
+                                "Cafés",
+                                "Barbershops",
+                                "Street vendors",
+                            ].map((item) => (
+                                <li key={item} className="flex items-center gap-2">
+                                    <FiCheck className="text-orange-500 w-5 h-5" />
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Security Content */}
+                    <div className="flex flex-col md:flex-row gap-16">
+                        <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-4">
+                                <FiShield className="text-orange-500 text-3xl" />
+                                <h2 className="text-3xl font-bold text-white">100% Non-Custodial</h2>
+                            </div>
+                            <p className="text-zinc-400 text-lg leading-relaxed">
+                                Built with security first. Connect your Lightning wallet via Nostr Wallet Connect (e.g., Alby) for direct payments. No custodians, no accounts, and no servers holding your funds—full control is yours.
+                            </p>
+                        </div>
+                        <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-4">
+                                <FiClock className="text-orange-500 text-3xl" />
+                                <h2 className="text-3xl font-bold text-white">Coming Soon</h2>
+                            </div>
+                            <ul className="text-zinc-400 text-lg space-y-3">
+                                <li className="flex items-center gap-2">
+                                    <FiCheck className="text-orange-500" /> Mobile app
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <FiCheck className="text-orange-500" /> Android POS support
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <FiCheck className="text-orange-500" /> Fiat conversions
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <FiCheck className="text-orange-500" /> Offline PWA
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Security Section */}
-            <section id="security" className="py-20">
-                <div className="container mx-auto px-6">
-                    <div className="grid md:grid-cols-2 gap-12">
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <FiShield className="text-orange-500 text-2xl" />
-                                <h2 className="text-2xl font-bold">100% Non-Custodial</h2>
-                            </div>
-                            <p className="text-zinc-300">
-                                Secure by design. Connect a Lightning wallet via Nostr Wallet Connect (e.g. Alby) and receive payments directly.
-                                No custodians, no account needed, and no servers holding your funds.
-                            </p>
-                        </div>
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <FiClock className="text-orange-500 text-2xl" />
-                                <h2 className="text-2xl font-bold">Coming Soon</h2>
-                            </div>
-                            <ul className="text-zinc-300 space-y-2">
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Mobile app</li>
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Android POS support</li>
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Fiat conversions</li>
-                                <li className="flex items-center gap-2"><FiCheck className="text-orange-500" /> Offline PWA</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
 
             {/* Open Source Section */}
             <section id="opensource" className="py-20 bg-zinc-800/30">
