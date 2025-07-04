@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
-import { FiZap, FiCopy, FiRefreshCw, FiLoader, FiCheck, FiClock, FiShield, FiGlobe, FiGithub, FiMenu, FiSmartphone } from "react-icons/fi";
+import { FiZap, FiCopy, FiRefreshCw, FiLoader, FiCheck, FiClock, FiGlobe, FiMenu, FiSmartphone } from "react-icons/fi";
 import { MdCurrencyBitcoin } from "react-icons/md";
 import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
 import LogoLightningOrangeNoBg from "../assets/img/NWC-BIG-Orange-NOBG.svg";
 import LogoLightningWhite from "../assets/img/NWC-Logo-Lightning-White-No-bg.svg";
+import LogoLightningOrange from "../assets/img/NWC-Logo-Lightning-Orange-No-bg.svg"
 import NWCWallet from "../assets/img/NWCPay-wallet.png";
+import NWCLogoSquare from "../assets/img/nwc-logo-md-no-bg.svg";
 
 import { IoQrCodeOutline } from "react-icons/io5";
 import { PiPlugsConnectedBold } from "react-icons/pi";
-import { GiReceiveMoney } from "react-icons/gi";
+import { GiLightningShield, GiReceiveMoney } from "react-icons/gi";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -349,7 +351,7 @@ const LandingPage = () => {
                             </div>
                             <button
                                 onClick={() => navigate("/connect")}
-                                className="cursor-pointer shadow-lg bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-black py-2 px-10 rounded-lg transition flex items-center justify-center w-fit"
+                                className="cursor-pointer shadow-lg bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-black py-2 px-10 rounded-lg transition flex items-center justify-center w-full sm:w-fit"
                             >
                                 <img src={LogoLightningWhite} className="h-5 mr-1" alt="Lightning Icon" /> Sign up in minutes
                             </button>
@@ -370,20 +372,20 @@ const LandingPage = () => {
 
                     {/* Feature 2: Tailored for Merchants */}
                     <section
-                        className="relative bg-gradient-to-br from-zinc-900 to-zinc-800 py-12 sm:py-16 px-4 sm:px-6 lg:px-8"
+                        className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8"
                         aria-labelledby="merchant-feature-title"
                     >
                         <div className="max-w-7xl mx-auto">
-                            <div className="flex flex-col items-center lg:items-start bg-zinc-800/50 backdrop-blur-sm p-6 sm:p-10 lg:p-12 rounded-2xl shadow-xl border border-gray-700/50 animate-fade-in">
+                            <div className="flex flex-col items-center lg:items-start bg-zinc-900 backdrop-blur-sm p-6 sm:p-10 lg:p-12 rounded-2xl shadow-xl border border-gray-700/50 animate-fade-in">
                                 {/* Header Section */}
-                                <div className="flex items-center gap-4 mb-6">
+                                <div className="flex flex-col sm:flex-row items-center gap-2 mb-6">
                                     <MdCurrencyBitcoin
-                                        className="text-orange-500 w-10 h-10 sm:w-12 sm:h-12 transform transition-transform duration-300 hover:scale-110"
+                                        className="text-orange-500 w-10 h-10 sm:w-12 sm:h-12 transform transition-transform duration-500 hover:scale-110"
                                         aria-hidden="true"
                                     />
                                     <h2
                                         id="merchant-feature-title"
-                                        className="text-3xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight"
+                                        className="text-xl sm:text-3xl lg:text-3xl font-extrabold text-white tracking-tight text-center sm:text-start"
                                     >
                                         Empowering Everyone to Accept Bitcoin Seamlessly
                                     </h2>
@@ -394,75 +396,136 @@ const LandingPage = () => {
                                     Designed for seamless daily use, NWCPay empowers a wide range of professionals and small businesses to accept Bitcoin effortlessly:
                                 </p>
 
-                                {/* List of Merchant Types */}
+                                {/* List of Use Case Scenarios */}
                                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-300 text-base sm:text-lg">
                                     {[
-                                        'Retail stores',
-                                        'Freelancers',
-                                        'Restaurants',
-                                        'Coffee Shops',
-                                        'Barbershops',
-                                        'Street vendors',
-                                    ].map((item, index) => (
+                                        {
+                                            title: 'Quick Counter Payments',
+                                            description: 'Process Bitcoin at your shop counter with instant QR code scans.',
+                                        },
+                                        {
+                                            title: 'Mobile Transactions',
+                                            description: 'Accept payments on the go with a mobile-friendly setup.',
+                                        },
+                                        {
+                                            title: 'Customer Invoicing',
+                                            description: 'Send instant invoices for services with real-time confirmation.',
+                                        },
+                                        {
+                                            title: 'Event Sales',
+                                            description: 'Handle payments at fairs or pop-up events with ease.',
+                                        },
+                                        {
+                                            title: 'Secure Checkouts',
+                                            description: 'Ensure safe transactions with built-in encryption.',
+                                        },
+                                        {
+                                            title: 'Daily Sales Tracking',
+                                            description: 'Monitor Bitcoin payments with real-time insights.',
+                                        },
+                                    ].map((scenario, index) => (
                                         <li
-                                            key={item}
-                                            className="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 animate-slide-up"
+                                            key={scenario.title}
+                                            className="flex flex-col gap-2 py-3 px-4 rounded-lg hover:bg-zinc-800/40 transition-colors duration-200 animate-slide-up"
                                             style={{ animationDelay: `${index * 100}ms` }}
                                             role="listitem"
                                         >
-                                            <FiCheck className="text-orange-400 w-5 h-5 flex-shrink-0" aria-hidden="true" />
-                                            <span>{item}</span>
+                                            <div className="flex items-center gap-3">
+                                                <FiCheck className="text-orange-400 w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                                                <span className="font-semibold">{scenario.title}</span>
+                                            </div>
+                                            <p className="text-gray-400 text-sm leading-relaxed sm:ml-0">{scenario.description}</p>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
                         </div>
 
+
+                    </section>
+
+                    <section
+                        className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8"
+                        aria-labelledby="security-title"
+                    >
+                        <div className="max-w-7xl mx-auto">
+                            <div className="flex flex-col items-center bg-zinc-900 backdrop-blur-sm p-6 sm:p-10 lg:p-12 rounded-2xl shadow-xl border border-gray-700/50 animate-fade-in">
+                                <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
+                                    <GiLightningShield
+                                        className="text-orange-500 w-10 h-10 sm:w-12 sm:h-12 transform transition-transform duration-300 hover:scale-110"
+                                        aria-hidden="true"
+                                    />
+                                    <h2
+                                        id="security-title"
+                                        className="text-xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight"
+                                    >
+                                        100% Non-Custodial Security
+                                    </h2>
+                                </div>
+                                <p className="text-gray-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-3xl text-center animate-slide-up">
+                                    NWCPay prioritizes your security. Connect your Lightning wallet via Nostr Wallet Connect(NWC) for direct, secure payments.
+                                    <br /> No custodians, no accounts, no servers your funds, your control.
+                                </p>
+                            </div>
+                        </div>
                         {/* Decorative Background Element */}
                         <div className="absolute inset-0 -z-10 overflow-hidden">
                             <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-orange-500/10 rounded-full blur-3xl"></div>
                         </div>
                     </section>
 
-                    {/* Security Content */}
-                    <div className="flex flex-col md:flex-row gap-16">
-                        <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-4">
-                                <FiShield className="text-orange-500 text-3xl" />
-                                <h2 className="text-3xl font-bold text-white">100% Non-Custodial</h2>
+                    <section
+                        className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8"
+                        aria-labelledby="coming-soon-title"
+                    >
+                        <div className="max-w-7xl mx-auto">
+                            <div className="flex flex-col items-center bg-zinc-900/50 backdrop-blur-sm p-6 sm:p-10 lg:p-12 rounded-2xl shadow-xl border border-gray-700/50 animate-fade-in">
+                                <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
+                                    <FiClock
+                                        className="text-orange-500 w-10 h-10 sm:w-12 sm:h-12 transform transition-transform duration-300 hover:scale-110"
+                                        aria-hidden="true"
+                                    />
+                                    <h2
+                                        id="coming-soon-title"
+                                        className="text-xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight"
+                                    >
+                                        Exciting Features Coming Soon
+                                    </h2>
+                                </div>
+                                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-300 text-base sm:text-lg">
+                                    {[
+                                        { title: 'Mobile App', description: 'Manage payments on iOS and Android devices.' },
+                                        { title: 'Android POS Support', description: 'Integrate with POS systems for seamless checkouts.' },
+                                        { title: 'Fiat Conversions', description: 'Convert Bitcoin to local currency instantly.' },
+                                    ].map((feature, index) => (
+                                        <li
+                                            key={feature.title}
+                                            className="flex flex-col gap-2 py-3 px-4 rounded-lg hover:bg-zinc-800/50 transition-colors duration-200 animate-slide-up"
+                                            style={{ animationDelay: `${index * 100}ms` }}
+                                            role="listitem"
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <FiCheck className="text-orange-500 w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                                                <span className="font-semibold">{feature.title}</span>
+                                            </div>
+                                            <p className="text-gray-400 text-sm leading-relaxed">{feature.description}</p>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
-                            <p className="text-zinc-400 text-lg leading-relaxed">
-                                Built with security first. Connect your Lightning wallet via Nostr Wallet Connect (e.g., Alby) for direct payments. No custodians, no accounts, and no servers holding your funds—full control is yours.
-                            </p>
                         </div>
-                        <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-4">
-                                <FiClock className="text-orange-500 text-3xl" />
-                                <h2 className="text-3xl font-bold text-white">Coming Soon</h2>
-                            </div>
-                            <ul className="text-zinc-400 text-lg space-y-3">
-                                <li className="flex items-center gap-2">
-                                    <FiCheck className="text-orange-500" /> Mobile app
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <FiCheck className="text-orange-500" /> Android POS support
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <FiCheck className="text-orange-500" /> Fiat conversions
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <FiCheck className="text-orange-500" /> Offline PWA
-                                </li>
-                            </ul>
+                        {/* Decorative Background Element */}
+                        <div className="absolute inset-0 -z-10 overflow-hidden">
+                            <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-orange-500/10 rounded-full blur-3xl"></div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </section>
 
 
 
             {/* Open Source Section */}
-            <section id="opensource" className="py-20 bg-zinc-800/30">
+            {/* <section id="opensource" className="py-20 bg-zinc-800/30">
                 <div className="container mx-auto px-6 text-center max-w-3xl">
                     <div className="flex justify-center mb-6">
                         <FiGithub className="text-orange-500 text-4xl" />
@@ -476,22 +539,24 @@ const LandingPage = () => {
                         <FiGithub /> Star on GitHub
                     </button>
                 </div>
-            </section>
+            </section> */}
 
             {/* Final CTA */}
-            <section className="py-20 bg-gradient-to-r from-orange-500/10 to-zinc-900/80">
-                <div className="container mx-auto px-6 text-center">
-                    <FiZap className="text-orange-500 text-4xl mx-auto mb-4" />
-                    <h2 className="text-4xl font-bold mb-6">Try NWCPay Now</h2>
-                    <p className="text-xl text-zinc-300 mb-8 max-w-2xl mx-auto">
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-6 text-center flex flex-col items-center">
+                    <div className="flex items-center flex-col">
+                        <img src={LogoLightningOrange} className="h-20" alt="NWCPay Logo" />
+                        <h2 className="text-4xl font-black mb-6 text-orange-500">Try NWCPay Now</h2>
+                    </div>
+                    <p className="text-xl text-zinc-700 font-medium mb-8 max-w-2xl mx-auto">
                         Connect your Nostr Wallet Connect-compatible wallet and generate your first Lightning invoice.
-                        Start accepting Bitcoin in seconds — anywhere in the world.
+                        <br /> Start accepting Bitcoin in seconds, anywhere in the world.
                     </p>
                     <button
                         onClick={() => navigate("/connect")}
-                        className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-12 rounded-lg text-lg transition flex items-center gap-2 mx-auto"
+                        className="cursor-pointer shadow-lg bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-black py-2 px-10 rounded-lg transition flex items-center justify-center w-fit"
                     >
-                        <FiZap /> Get Started
+                        <img src={LogoLightningWhite} className="h-5 mr-1" alt="Lightning Icon" />Get Started
                     </button>
                 </div>
             </section>
@@ -500,9 +565,8 @@ const LandingPage = () => {
             <footer className="bg-zinc-800/50 py-12 border-t border-zinc-700">
                 <div className="container mx-auto px-6">
                     <div className="flex flex-col md:flex-row justify-between items-center">
-                        <div className="flex items-center gap-2 mb-4 md:mb-0">
-                            <FiZap className="text-orange-500 text-2xl" />
-                            <span className="font-bold text-xl">NWCPay</span>
+                        <div className="flex items-center gap-2 mb-4 md:mb-0 w-30">
+                            <img src={NWCLogoSquare} />
                         </div>
                         <div className="flex gap-6">
                             <a href="#" className="hover:text-orange-500 transition">Docs</a>
