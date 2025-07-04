@@ -10,9 +10,9 @@ const App = () => {
     <WalletProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ConnectPage />} />
+          <Route path="/connect" element={<ConnectPage />} />
           <Route path="/wallet" element={<Wallet />} />
-          <Route path="/welcome" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
         </Routes>
       </BrowserRouter>
     </WalletProvider>

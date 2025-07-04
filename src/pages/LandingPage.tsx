@@ -126,7 +126,7 @@ const LandingPage = () => {
                             <a href="#security" className="hover:text-orange-600  hover:underline decoration-2 underline-offset-4 transition duration-300">Security</a>
                             <a href="#opensource" className="hover:text-orange-600  hover:underline decoration-2 underline-offset-4 transition duration-300">Open Source</a>
                             <button
-                                onClick={() => navigate("/")}
+                                onClick={() => navigate("/connect")}
                                 className="cursor-pointer bg-orange-500 border-2 shadow-xl hover:shadow-lg hover:scale-105 border-orange-600 text-white font-bold py-2 px-6 rounded-lg transition flex items-center"
                             >
                                 <img src={LogoLightningWhite} className="h-5" alt="Lightning Icon" />Launch App
@@ -147,7 +147,7 @@ const LandingPage = () => {
                             <a href="#security" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Security</a>
                             <a href="#opensource" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Open Source</a>
                             <button
-                                onClick={() => navigate("/")}
+                                onClick={() => navigate("/connect")}
                                 className="w-full cursor-pointer bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-bold py-2 px-6 rounded-lg transition flex items-center justify-center text-center"
                             >
                                 <img src={LogoLightningWhite} className="h-5" alt="Lightning Icon" />Launch App
@@ -170,7 +170,7 @@ const LandingPage = () => {
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <button
-                                    onClick={() => navigate("/")}
+                                    onClick={() => navigate("/connect")}
                                     className="cursor-pointer shadow-lg bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-black py-2 px-10 rounded-lg transition flex items-center justify-center"
                                 >
                                     <img src={LogoLightningWhite} className="h-5 mr-1" alt="Lightning Icon" /> Try It Now
@@ -348,7 +348,7 @@ const LandingPage = () => {
                                 </ul>
                             </div>
                             <button
-                                onClick={() => navigate("/")}
+                                onClick={() => navigate("/connect")}
                                 className="cursor-pointer shadow-lg bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-black py-2 px-10 rounded-lg transition flex items-center justify-center w-fit"
                             >
                                 <img src={LogoLightningWhite} className="h-5 mr-1" alt="Lightning Icon" /> Sign up in minutes
@@ -488,7 +488,7 @@ const LandingPage = () => {
                         Start accepting Bitcoin in seconds — anywhere in the world.
                     </p>
                     <button
-                        onClick={() => navigate("/app")}
+                        onClick={() => navigate("/connect")}
                         className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-12 rounded-lg text-lg transition flex items-center gap-2 mx-auto"
                     >
                         <FiZap /> Get Started
