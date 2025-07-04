@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { FiZap, FiCopy, FiRefreshCw, FiLoader, FiCheck, FiClock, FiShield, FiGlobe, FiGithub, FiMenu, FiLock, FiSmartphone } from "react-icons/fi";
+import { FiZap, FiCopy, FiRefreshCw, FiLoader, FiCheck, FiClock, FiShield, FiGlobe, FiGithub, FiMenu, FiSmartphone } from "react-icons/fi";
 import { MdCurrencyBitcoin } from "react-icons/md";
 import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,11 @@ import LogoLightningOrangeNoBg from "../assets/img/NWC-BIG-Orange-NOBG.svg";
 import LogoLightningWhite from "../assets/img/NWC-Logo-Lightning-White-No-bg.svg";
 import LogoLightningOrange from "../assets/img/NWC-Logo-Lightning-Orange-No-bg.svg";
 import NWCWallet from "../assets/img/NWCPay-wallet.png";
+import { BsQrCode } from "react-icons/bs";
+import { IoQrCodeOutline } from "react-icons/io5";
+import { PiPlugsConnectedBold } from "react-icons/pi";
+import { GiReceiveMoney } from "react-icons/gi";
+import { FaBitcoin } from "react-icons/fa";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -289,28 +294,28 @@ const LandingPage = () => {
 
 
                     {/* Highlight Features */}
-                    <div className="flex flex-col md:flex-row gap-8 mb-16">
+                    <div className="flex flex-col md:flex-row gap-8 mb-16 font-semibold">
                         <div className="flex-1 p-6 rounded-lg text-center">
                             <FiZap className="text-orange-500 text-4xl mx-auto mb-4" />
                             <h3 className="text-xl font-semibold text-white mb-2">Lightning-Fast Payments</h3>
-                            <p className="text-zinc-400">
+                            <p className="text-zinc-300">
                                 Experience instant transactions with the Lightning Network, optimized for speed and efficiency.
                             </p>
                         </div>
 
                         <div className="flex-1 p-6 rounded-lg text-center">
                             <FiSmartphone className="text-orange-500 text-4xl mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold text-white mb-2">Use on Any Mobile Device</h3>
-                            <p className="text-zinc-400">
+                            <h3 className="text-xl font-semibold text-white mb-2">Use on Any Device</h3>
+                            <p className="text-zinc-300">
                                 Access NWCPay from any smartphone or tablet with an internet connection, making payments seamless on the go.
                             </p>
                         </div>
 
                         <div className="flex-1 p-6 rounded-lg text-center">
                             <FiGlobe className="text-orange-500 text-4xl mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold text-white mb-2">Decentralized Freedom</h3>
-                            <p className="text-zinc-400">
-                                Operate without intermediaries, giving you true financial sovereignty in a decentralized ecosystem.
+                            <h3 className="text-xl font-semibold text-white mb-2">Pay Anywhere, Anytime</h3>
+                            <p className="text-zinc-300">
+                                With NWCPay, accept Bitcoin payments from customers worldwide using any browser, no restrictions or borders.
                             </p>
                         </div>
                     </div>
@@ -319,16 +324,32 @@ const LandingPage = () => {
                     <div className="flex-1 p-8 sm:p-20 rounded-lg flex gap-10 flex-col md:flex-row items-start bg-white text-zinc-900">
                         {/* Text Content */}
                         <div className="flex-1 w-full md:w-1/2 flex flex-col gap-4">
-                            <div className="flex items-center gap-1">
-                                <MdCurrencyBitcoin className="text-orange-500 w-20 h-20" />
-                                <h2 className="text-2xl font-bold tracking-tigh  sm:whitespace-nowrap">Accept Bitcoin Payments in Seconds</h2>
+                            <div className="flex flex-col items-start gap-2">
+                                <div className="shadow-xl bg-orange-500 rounded-md flex items-center">
+                                    <MdCurrencyBitcoin className="text-white w-12 h-12" />
+                                </div>
+                                <h2 className="text-3xl font-bold tracking-tigh  sm:whitespace-nowrap">Accept Bitcoin Payments in Seconds</h2>
                             </div>
                             <p className="text-lg leading-relaxed">
                                 <span className="font-black">NWCPay</span> turns any modern browser into a powerful Lightning payment terminal. No custodians, no complex setups, and no software installations required.
                             </p>
-                            <p className="text-lg leading-relaxed mb-4">
-                                Connect your Lightning wallet using Nostr Wallet Connect (e.g., Alby), create an invoice, and receive satoshis instantly with full control over your funds.
-                            </p>
+                            <div className="text-zinc-700 text-md font-medium mb-4">
+                                <h3 className="text-xl font-bold text-zinc-700 mb-4">How It Works</h3>
+                                <ul className="space-y-3">
+                                    <li className="flex items-center gap-3">
+                                        <PiPlugsConnectedBold className="text-orange-500 w-6 h-6 mt-1" />
+                                        <span>Connect your Lightning wallet using Nostr Wallet Connect</span>
+                                    </li>
+                                    <li className="flex items-center gap-3">
+                                        <IoQrCodeOutline className="text-orange-500 w-6 h-6 mt-1" />
+                                        <span>Create an invoice directly in your browser</span>
+                                    </li>
+                                    <li className="flex items-center gap-3">
+                                        <GiReceiveMoney className="text-orange-500 w-6 h-6 mt-1" />
+                                        <span>Receive sats instantly with full control over your funds.</span>
+                                    </li>
+                                </ul>
+                            </div>
                             <button
                                 onClick={() => navigate("/")}
                                 className="cursor-pointer shadow-lg bg-orange-500 border-2 hover:shadow-lg hover:scale-105 border-orange-600 text-white font-black py-2 px-10 rounded-lg transition flex items-center justify-center w-fit"
@@ -351,30 +372,60 @@ const LandingPage = () => {
                     </div>
 
                     {/* Feature 2: Tailored for Merchants */}
-                    <div className="flex-1 p-20 rounded-lg mb-16">
-                        <div className="flex items-center gap-4 mb-6">
-                            <FiGlobe className="text-orange-500 w-8 h-8" />
-                            <h2 className="text-4xl font-bold tracking-tight text-white">Empowering Everyone to Accept Bitcoin Seamlessly</h2>
+                    <section
+                        className="relative bg-gradient-to-br from-zinc-900 to-zinc-800 py-12 sm:py-16 px-4 sm:px-6 lg:px-8"
+                        aria-labelledby="merchant-feature-title"
+                    >
+                        <div className="max-w-7xl mx-auto">
+                            <div className="flex flex-col items-center lg:items-start bg-zinc-800/50 backdrop-blur-sm p-6 sm:p-10 lg:p-12 rounded-2xl shadow-xl border border-gray-700/50 animate-fade-in">
+                                {/* Header Section */}
+                                <div className="flex items-center gap-4 mb-6">
+                                    <MdCurrencyBitcoin
+                                        className="text-orange-500 w-10 h-10 sm:w-12 sm:h-12 transform transition-transform duration-300 hover:scale-110"
+                                        aria-hidden="true"
+                                    />
+                                    <h2
+                                        id="merchant-feature-title"
+                                        className="text-3xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight"
+                                    >
+                                        Empowering Everyone to Accept Bitcoin Seamlessly
+                                    </h2>
+                                </div>
+
+                                {/* Description */}
+                                <p className="text-gray-300 text-base sm:text-lg lg:text-xl leading-relaxed mb-8  text-center lg:text-left animate-slide-up">
+                                    Designed for seamless daily use, NWCPay empowers a wide range of professionals and small businesses to accept Bitcoin effortlessly:
+                                </p>
+
+                                {/* List of Merchant Types */}
+                                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-300 text-base sm:text-lg">
+                                    {[
+                                        'Retail stores',
+                                        'Freelancers',
+                                        'Restaurants',
+                                        'Coffee Shops',
+                                        'Barbershops',
+                                        'Street vendors',
+                                    ].map((item, index) => (
+                                        <li
+                                            key={item}
+                                            className="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 animate-slide-up"
+                                            style={{ animationDelay: `${index * 100}ms` }}
+                                            role="listitem"
+                                        >
+                                            <FiCheck className="text-orange-400 w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
-                        <p className="text-zinc-300 text-lg leading-relaxed mb-4">
-                            Designed for seamless daily use, NWCPay empowers a wide range of professionals and small businesses to accept Bitcoin effortlessly:
-                        </p>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-zinc-300 text-lg">
-                            {[
-                                "Retail stores",
-                                "Freelancers",
-                                "Restaurants",
-                                "Cafés",
-                                "Barbershops",
-                                "Street vendors",
-                            ].map((item) => (
-                                <li key={item} className="flex items-center gap-2">
-                                    <FiCheck className="text-orange-500 w-5 h-5" />
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+
+                        {/* Decorative Background Element */}
+                        <div className="absolute inset-0 -z-10 overflow-hidden">
+                            <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-orange-500/10 rounded-full blur-3xl"></div>
+                        </div>
+                    </section>
 
                     {/* Security Content */}
                     <div className="flex flex-col md:flex-row gap-16">
