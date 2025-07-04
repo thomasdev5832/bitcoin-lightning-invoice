@@ -1,18 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FiZap, FiCopy, FiRefreshCw, FiLoader, FiCheck, FiClock, FiShield, FiGlobe, FiGithub, FiMenu, FiSmartphone } from "react-icons/fi";
 import { MdCurrencyBitcoin } from "react-icons/md";
 import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
-import LogoLightningWhiteNoBg from "../assets/img/NWC-BIG-NOBG.svg";
 import LogoLightningOrangeNoBg from "../assets/img/NWC-BIG-Orange-NOBG.svg";
 import LogoLightningWhite from "../assets/img/NWC-Logo-Lightning-White-No-bg.svg";
-import LogoLightningOrange from "../assets/img/NWC-Logo-Lightning-Orange-No-bg.svg";
 import NWCWallet from "../assets/img/NWCPay-wallet.png";
-import { BsQrCode } from "react-icons/bs";
+
 import { IoQrCodeOutline } from "react-icons/io5";
 import { PiPlugsConnectedBold } from "react-icons/pi";
 import { GiReceiveMoney } from "react-icons/gi";
-import { FaBitcoin } from "react-icons/fa";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -28,7 +25,7 @@ const LandingPage = () => {
     const [satsAmount, setSatsAmount] = useState<string>("");
     const [satsPerUsd, setSatsPerUsd] = useState<number>(2800);
     const [clickedKeys, setClickedKeys] = useState<string[]>([]);
-    const prevIsOpenRef = useRef<boolean>(false);
+    //const prevIsOpenRef = useRef<boolean>(false);
 
     // Fetch Bitcoin USD price
     useEffect(() => {
@@ -80,7 +77,7 @@ const LandingPage = () => {
                     setUsdAmount((prev) => (prev === "" ? "0." : prev + "."));
                 }
             } else if (/^\d$/.test(key)) {
-                const [whole, fractional] = usdAmount.split(".");
+                const [, fractional] = usdAmount.split(".");
                 if (!fractional || fractional.length < 2) {
                     setUsdAmount((prev) => prev + key);
                 }
