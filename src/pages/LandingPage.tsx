@@ -541,6 +541,80 @@ const LandingPage = () => {
                 </div>
             </section> */}
 
+            <section id="faq" className="py-24 bg-zinc-900">
+                <div className="container mx-auto px-6 max-w-2xl">
+                    <div className="text-center mb-12">
+                        <h2 className="text-4xl font-extrabold text-white tracking-tight">Frequently Asked Questions</h2>
+                        <p className="text-lg text-zinc-300 mt-4 max-w-3xl mx-auto">
+                            Everything you need to know about NWCPay and how it works with Bitcoin and the Lightning Network.
+                        </p>
+                    </div>
+                    <div className="space-y-6">
+                        {[
+                            {
+                                question: "What is NWCPay?",
+                                answer:
+                                    "NWCPay is an open-source, non-custodial Bitcoin payment tool that allows anyone to accept payments via the Lightning Network directly in their browser. It’s fast, secure, and requires no complex setups.",
+                            },
+                            {
+                                question: "How does NWCPay ensure security?",
+                                answer:
+                                    "NWCPay is 100% non-custodial, meaning you retain full control of your funds. It uses Nostr Wallet Connect (NWC) to securely connect to your Lightning wallet, with no intermediaries or servers holding your Bitcoin.",
+                            },
+                            {
+                                question: "Do I need to install any software to use NWCPay?",
+                                answer:
+                                    "No, NWCPay works directly in any modern web browser. Simply connect your Lightning wallet using Nostr Wallet Connect, and you’re ready to generate invoices and accept payments.",
+                            },
+                            {
+                                question: "What is the Lightning Network?",
+                                answer:
+                                    "The Lightning Network is a second-layer scaling solution for Bitcoin that enables fast, low-cost transactions. It allows instant payments while maintaining Bitcoin’s security and decentralization.",
+                            },
+                            {
+                                question: "Can I use NWCPay on my mobile device?",
+                                answer:
+                                    "Yes, NWCPay is fully compatible with mobile browsers, making it easy to accept Bitcoin payments on the go. A dedicated mobile app is also in development for an even smoother experience.",
+                            },
+                            {
+                                question: "Is NWCPay free to use?",
+                                answer:
+                                    "Yes, NWCPay is completely free and open-source. There are no fees or subscriptions required, and you can even contribute to the project on GitHub.",
+                            },
+                        ].map((faq, index) => (
+                            <div
+                                key={index}
+                                className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors duration-200"
+                            >
+                                <details className="group">
+                                    <summary className="flex items-center justify-between cursor-pointer">
+                                        <h3 className="text-lg font-semibold text-white">{faq.question}</h3>
+                                        <span className="text-orange-500 group-open:rotate-180 transition-transform">
+                                            <svg
+                                                className="w-5 h-5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M19 9l-7 7-7-7"
+                                                />
+                                            </svg>
+                                        </span>
+                                    </summary>
+                                    <p className="mt-4 text-zinc-300 text-base leading-relaxed">{faq.answer}</p>
+                                </details>
+                            </div>
+                        ))}
+                    </div>
+
+                </div>
+            </section>
+
             {/* Final CTA */}
             <section className="py-20 bg-white">
                 <div className="container mx-auto px-6 text-center flex flex-col items-center">
