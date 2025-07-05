@@ -106,3 +106,12 @@
 .animate-slide-up {
   animation: slide-up 0.3s ease-out;
 }
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary {
+  list-style: none;
+  /* Fallback for non-WebKit browsers */
+}
