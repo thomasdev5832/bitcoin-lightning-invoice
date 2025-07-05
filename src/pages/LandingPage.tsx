@@ -647,7 +647,6 @@ const LandingPage = () => {
                         <div className="flex flex-col items-center md:items-start">
                             <div className="flex items-center gap-2 mb-4">
                                 <img src={NWCLogoSquare} alt="NWCPay Logo" className="h-10 w-auto" />
-                                <span className="text-white text-xl font-bold">NWCPay</span>
                             </div>
                             <p className="text-zinc-400 text-sm leading-relaxed text-center md:text-left">
                                 A fast, secure, and open-source Bitcoin payment tool built for global Lightning Network adoption.
