@@ -2,6 +2,9 @@ import { useState } from "react";
 import { FiLoader, FiRefreshCw, FiLogOut } from "react-icons/fi";
 import { useWallet } from "../contexts/ContextWallet";
 import { useNavigate } from "react-router-dom";
+import { FaWallet } from "react-icons/fa";
+import { HiMiniArrowsUpDown } from "react-icons/hi2";
+import { IoSettingsSharp } from "react-icons/io5";
 
 function Header({ isLoading, checkBalance }: {
     isLoading: boolean;
@@ -78,34 +81,37 @@ function Header({ isLoading, checkBalance }: {
             <div className={`fixed top-0 bg-zinc-900 shadow-xl z-30 transform transition-all duration-300 ease-out ${isMenuOpen
                 ? 'opacity-100 translate-y-0 scale-100'
                 : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
-                } w-full h-screen sm:w-3xs sm:h-auto sm:top-16 sm:right-0 sm:rounded-lg sm:p-2`}>
-                <div className="px-4 pt-10 sm:p-2">
-                    <div className="flex flex-col space-y-2">
+                } w-full h-screen sm:w-fit sm:h-auto sm:top-16 sm:right-0 sm:rounded-lg sm:p-2`}>
+                <div className="px-4 pt-10 sm:p-4 sm:px-4">
+                    <div className="flex flex-col space-y-2 items-center">
                         <button
                             onClick={() => handleNavigate("/wallet")}
-                            className="text-gray-200 py-3 px-4 hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold text-left rounded-md"
+                            className="flex items-center sm:border-zinc-800 sm:border justify-center gap-2 text-gray-200 py-3 px-4 sm:p-0 sm:w-32 sm:h-32 sm:flex-col sm:items-center sm:justify-center hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer"
                         >
+                            <FaWallet />
                             Wallet
                         </button>
                         <button
                             onClick={() => handleNavigate("/transactions")}
-                            className="text-gray-200 py-3 px-4 hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold text-left rounded-md"
+                            className="flex items-center sm:border-zinc-800 sm:border justify-center gap-2 text-gray-200 py-3 px-4 sm:p-0 sm:w-32 sm:h-32 sm:flex-col sm:items-center sm:justify-center hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer"
                         >
+                            <HiMiniArrowsUpDown />
                             Transactions
                         </button>
                         <button
                             onClick={() => handleNavigate("/settings")}
-                            className="text-gray-200 py-3 px-4 hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold text-left rounded-md"
+                            className="flex items-center sm:border-zinc-800 sm:border justify-center gap-2 text-gray-200 py-3 px-4 sm:p-0 sm:w-32 sm:h-32 sm:flex-col sm:items-center sm:justify-center hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer"
                         >
+                            <IoSettingsSharp />
                             Settings
                         </button>
                         <div className="border-t border-zinc-700 my-2"></div>
                         <button
                             onClick={handleDisconnect}
-                            className="bg-red-500 text-white py-3 px-4 rounded-md hover:bg-red-600 transition-all duration-200 font-semibold flex items-center justify-center gap-2 uppercase"
+                            className=" text-xs flex items-center justify-center gap-2 text-white py-3 px-4 bg-red-500 hover:bg-red-600 transition-all duration-200 font-semibold rounded-md cursor-pointer uppercase"
                         >
-                            <FiLogOut className="text-base" />
-                            Disconnect Wallet
+                            <FiLogOut className="text-sm" />
+                            Disconnect
                         </button>
                     </div>
                 </div>
