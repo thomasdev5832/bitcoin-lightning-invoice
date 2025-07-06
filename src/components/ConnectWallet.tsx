@@ -23,11 +23,11 @@ export default function ConnectWallet({ connectWallet }: { connectWallet: (uri: 
         setConnectionUri(text);
     };
 
-    const handleDemoConnect = () => {
-        const demoUri = "nostr+walletconnect://demo-app-key@relay.nostr.example.com?secret=xyz";
-        setConnectionUri(demoUri);
-        connectWallet(demoUri);
-    };
+    // const handleDemoConnect = () => {
+    //     const demoUri = "nostr+walletconnect://demo-app-key@relay.nostr.example.com?secret=xyz";
+    //     setConnectionUri(demoUri);
+    //     connectWallet(demoUri);
+    // };
 
     return (
         <div className="w-full rounded-lg shadow-sm flex flex-col items-center justify-center">
@@ -100,12 +100,12 @@ export default function ConnectWallet({ connectWallet }: { connectWallet: (uri: 
 
 
                     {/* Optional Demo Mode */}
-                    <button
+                    {/* <button
                         onClick={handleDemoConnect}
                         className="text-sm font-semibold text-zinc-400 hover:text-orange-500 w-fit text-center mt-4 cursor-pointer py-1 rounded-md underline"
                     >
                         Try without a wallet (demo mode)
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>
