@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaWallet } from "react-icons/fa";
 import { HiMiniArrowsUpDown } from "react-icons/hi2";
 import { IoSettingsSharp } from "react-icons/io5";
+import { MdOutlineDashboard } from "react-icons/md";
 
 function Header({ isLoading, checkBalance }: {
     isLoading: boolean;
@@ -96,6 +97,14 @@ function Header({ isLoading, checkBalance }: {
                         >
                             <FaWallet className={location.pathname === "/wallet" ? "text-orange-500" : ""} />
                             Wallet
+                        </button>
+                        <button
+                            onClick={() => handleNavigate("/dashboard")}
+                            className={`flex items-center sm:border-zinc-800 sm:border justify-center sm:justify-start gap-2 text-gray-200 py-3 px-4 sm:py-2 sm:px-4 sm:flex-row sm:w-40 sm:h-auto hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer ${location.pathname === "/dashboard" ? "text-orange-500" : ""
+                                }`}
+                        >
+                            <MdOutlineDashboard className={location.pathname === "/dashboard" ? "text-orange-500" : ""} />
+                            Dashboard
                         </button>
                         <button
                             onClick={() => handleNavigate("/transactions")}
