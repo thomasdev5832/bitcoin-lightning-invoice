@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiLoader, FiRefreshCw, FiLogOut } from "react-icons/fi";
 import { useWallet } from "../contexts/ContextWallet";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FaWallet } from "react-icons/fa";
 import { HiMiniArrowsUpDown } from "react-icons/hi2";
 import { IoSettingsSharp } from "react-icons/io5";
@@ -12,6 +12,7 @@ function Header({ isLoading, checkBalance }: {
 }) {
     const { nwc, disconnectWallet } = useWallet();
     const navigate = useNavigate();
+    const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleDisconnect = () => {
@@ -57,13 +58,13 @@ function Header({ isLoading, checkBalance }: {
                             {isLoading ? <FiLoader className="text-gray-400 animate-spin text-sm sm:text-base" /> : <FiRefreshCw className="text-gray-400 text-sm sm:text-base" />}
                         </button>
 
-                        {/* Menu Toggle Button - seguindo o padrão do primeiro exemplo */}
+                        {/* Menu Toggle Button */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="relative z-60 w-8 h-8 flex items-center justify-center group focus:outline-none cursor-pointer bg-zinc-900 rounded-md hover:bg-zinc-800 "
+                            className="relative z-60 w-8 h-8 flex items-center justify-center group focus:outline-none cursor-pointer bg-zinc-900 rounded-md hover:bg-zinc-800"
                             aria-label="Toggle navigation menu"
                         >
-                            <div className="relative w-5 h-4 flex flex-col justify-between items-cente">
+                            <div className="relative w-5 h-4 flex flex-col justify-between items-center">
                                 <span className={`w-full h-[2px] bg-gray-400 rounded-full transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[9px]' : 'translate-y-0'}`} />
                                 <span className={`w-full h-[2px] bg-gray-400 rounded-full transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
                                 <span className={`w-full h-[2px] bg-gray-400 rounded-full transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[5px]' : 'translate-y-0'}`} />
@@ -74,43 +75,49 @@ function Header({ isLoading, checkBalance }: {
             </div>
 
             {/* Overlay */}
-            <div className={`fixed inset-0 bg-black transition-opacity duration-300 z-20 ${isMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'}`}
-                onClick={() => setIsMenuOpen(false)} />
+            <div
+                className={`fixed inset-0 bg-black transition-opacity duration-300 z-20 ${isMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'}`}
+                onClick={() => setIsMenuOpen(false)}
+            />
 
             {/* Burger Menu */}
-            <div className={`fixed top-0 bg-zinc-900 shadow-xl z-30 transform transition-all duration-300 ease-out ${isMenuOpen
-                ? 'opacity-100 translate-y-0 scale-100'
-                : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
-                } w-full h-screen sm:w-fit sm:h-auto sm:top-16 sm:right-0 sm:rounded-lg sm:p-2`}>
-                <div className="px-4 pt-10 sm:p-4 sm:px-4">
-                    <div className="flex flex-col space-y-2 items-center">
+            <div
+                className={`fixed top-0 bg-zinc-900 shadow-xl z-30 transform transition-all duration-300 ease-out ${isMenuOpen
+                    ? 'opacity-100 translate-y-0 scale-100'
+                    : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
+                    } w-full h-screen sm:w-fit sm:h-auto sm:top-16 sm:right-4 sm:rounded-lg sm:p-4`}
+            >
+                <div className="px-4 pt-10 sm:p-0">
+                    <div className="flex flex-col space-y-2 items-center sm:items-start">
                         <button
                             onClick={() => handleNavigate("/wallet")}
-                            className="flex items-center sm:border-zinc-800 sm:border justify-center gap-2 text-gray-200 py-3 px-4 sm:p-0 sm:w-32 sm:h-32 sm:flex-col sm:items-center sm:justify-center hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer"
+                            className={`flex items-center sm:border-zinc-800 sm:border justify-center sm:justify-start gap-2 text-gray-200 py-3 px-4 sm:py-2 sm:px-4 sm:flex-row sm:w-40 sm:h-auto hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer ${location.pathname === "/wallet" ? "text-orange-500" : ""
+                                }`}
                         >
-                            <FaWallet />
+                            <FaWallet className={location.pathname === "/wallet" ? "text-orange-500" : ""} />
                             Wallet
                         </button>
                         <button
                             onClick={() => handleNavigate("/transactions")}
-                            className="flex items-center sm:border-zinc-800 sm:border justify-center gap-2 text-gray-200 py-3 px-4 sm:p-0 sm:w-32 sm:h-32 sm:flex-col sm:items-center sm:justify-center hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer"
+                            className={`flex items-center sm:border-zinc-800 sm:border justify-center sm:justify-start gap-2 text-gray-200 py-3 px-4 sm:py-2 sm:px-4 sm:flex-row sm:w-40 sm:h-auto hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer ${location.pathname === "/transactions" ? "text-orange-500" : ""
+                                }`}
                         >
-                            <HiMiniArrowsUpDown />
+                            <HiMiniArrowsUpDown className={location.pathname === "/transactions" ? "text-orange-500" : ""} />
                             Transactions
                         </button>
                         <button
                             onClick={() => handleNavigate("/settings")}
-                            className="flex items-center sm:border-zinc-800 sm:border justify-center gap-2 text-gray-200 py-3 px-4 sm:p-0 sm:w-32 sm:h-32 sm:flex-col sm:items-center sm:justify-center hover:text-white hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer"
+                            className={`flex items-center sm:border-zinc-800 sm:border justify-center sm:justify-start gap-2 text-gray-200 py-3 px-4 sm:py-2 sm:px-4 sm:flex-row sm:w-40 sm:h-auto hover:bg-zinc-800 transition-all duration-200 font-semibold rounded-md cursor-pointer ${location.pathname === "/settings" ? "text-orange-500" : ""
+                                }`}
                         >
-                            <IoSettingsSharp />
+                            <IoSettingsSharp className={location.pathname === "/settings" ? "text-orange-500" : ""} />
                             Settings
                         </button>
-                        <div className="border-t border-zinc-700 my-2"></div>
                         <button
                             onClick={handleDisconnect}
-                            className=" text-xs flex items-center justify-center gap-2 text-white py-3 px-4 bg-red-500 hover:bg-red-600 transition-all duration-200 font-semibold rounded-md cursor-pointer uppercase"
+                            className="flex items-center justify-center sm:justify-start gap-2 text-white py-3 px-4 sm:py-2 sm:px-4 sm:w-40 sm:h-auto bg-red-500 hover:bg-red-600 transition-all duration-200 font-semibold rounded-md cursor-pointer uppercase"
                         >
-                            <FiLogOut className="text-sm" />
+                            <FiLogOut className="" />
                             Disconnect
                         </button>
                     </div>

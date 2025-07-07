@@ -558,7 +558,7 @@ const LandingPage = () => {
                             {
                                 question: "What is NWCPay?",
                                 answer:
-                                    "NWCPay is an open-source, non-custodial Bitcoin payment tool that allows anyone to accept payments via the Lightning Network directly in their browser. It’s fast, secure, and requires no complex setups.",
+                                    "NWCPay is a Bitcoin payment tool that allows anyone to accept payments via the Lightning Network directly in their browser. It’s fast, secure, and requires no complex setups.",
                             },
                             {
                                 question: "How does NWCPay ensure security?",
@@ -580,11 +580,7 @@ const LandingPage = () => {
                                 answer:
                                     "Yes, NWCPay is fully compatible with mobile browsers, making it easy to accept Bitcoin payments on the go. A dedicated mobile app is also in development for an even smoother experience.",
                             },
-                            {
-                                question: "Is NWCPay free to use?",
-                                answer:
-                                    "Yes, NWCPay is completely free and open-source. There are no fees or subscriptions required, and you can even contribute to the project on GitHub.",
-                            },
+
                         ].map((faq, index) => (
                             <div
                                 key={index}
@@ -649,7 +645,7 @@ const LandingPage = () => {
                                 <img src={NWCLogoSquare} alt="NWCPay Logo" className="h-10 w-auto" />
                             </div>
                             <p className="text-zinc-400 text-sm leading-relaxed text-center md:text-left">
-                                A fast, secure, and open-source Bitcoin payment tool built for global Lightning Network adoption.
+                                A fast and simple Bitcoin payment tool built for global Lightning adoption. ⚡
                             </p>
                         </div>
 
@@ -732,7 +728,7 @@ const LandingPage = () => {
                     {/* Divider */}
                     <div className="mt-12 border-t border-zinc-700 pt-8 flex flex-col md:flex-row justify-between items-center">
                         <div className="text-zinc-400 text-sm text-center md:text-left">
-                            © {new Date().getFullYear()} NWCPay. All rights reserved. Open-source Bitcoin project.
+                            © {new Date().getFullYear()} NWCPay. All rights reserved.
                         </div>
                         <div className="flex gap-6 mt-4 md:mt-0">
                             <a
