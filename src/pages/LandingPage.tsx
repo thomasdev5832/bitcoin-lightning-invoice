@@ -179,7 +179,7 @@ const LandingPage = () => {
                     <div className="flex flex-col items-center gap-12">
                         {/* Title and Text Content */}
                         <div className="text-center">
-                            <span className="inline-block bg-orange-100 text-orange-600 text-xs font-semibold px-3 py-1 rounded-full mb-4 tracking-wide">
+                            <span className="inline-block bg-orange-100 text-orange-600 text-xs font-semibold px-3 py-1 rounded-md mb-4 tracking-wide">
                                 Powered by Lightning ⚡
                             </span>
                             <h1 className="text-5xl text-orange-500 md:text-7xl font-black mb-6 w-full">Fast Bitcoin Payments</h1>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { FiLoader, FiAlertCircle, FiZap } from "react-icons/fi";
 import { webln } from "@getalby/sdk";
 import { MdOutlineSwapVert } from "react-icons/md";
@@ -6,67 +6,60 @@ import { MdOutlineSwapVert } from "react-icons/md";
 interface Transaction {
     id: string;
     type: "incoming" | "outgoing";
-    amount: number; // em sats
+    amount: number;
     description: string;
-    createdAt: string; // Data formatada
+    createdAt: string;
     paymentHash: string;
     timestamp: number;
 }
 
 interface TransactionsProps {
     nwc: webln.NostrWebLNProvider | null;
+    limit?: number;
+    transactionsOverride?: Transaction[];
 }
 
-const Transactions = ({ nwc }: TransactionsProps) => {
+const Transactions = ({ nwc, limit = 10, transactionsOverride }: TransactionsProps) => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Busca transações reais da API NWC
-    const fetchTransactions = async () => {
+    // Busca transações reais da API NWC, agora memoizada com useCallback
+    const fetchTransactions = useCallback(async () => {
         if (!nwc) {
             setError("Wallet not connected.");
             return;
         }
         try {
             setIsLoading(true);
-            // Faz a requisição para listar transações
             const response = await nwc.listTransactions({});
 
-            // Verifica se a resposta contém transações
             if (!response.transactions || response.transactions.length === 0) {
                 setError("No transactions found.");
             } else {
-                // Formata as transações
                 const formattedTransactions: Transaction[] = response.transactions.map((tx) => {
-                    // Determina a data correta: settled_at (se pago) ou created_at (se não pago)
                     const timestamp = tx.settled_at || tx.created_at;
                     const date = timestamp ? new Date(timestamp * 1000).toLocaleString() : "Unsettled";
 
-                    // Usa o valor diretamente como sats (sem conversão)
-                    const amountInSats = tx.amount; // Já está em sats, conforme logs
-
-                    // console.log("Raw tx.amount:", tx.amount);
-                    // console.log("Formatted amountInSats:", amountInSats);
-                    // console.log("Timestamp:", timestamp);
-
                     return {
-                        id: tx.payment_hash, // Usamos o payment_hash como ID
-                        type: tx.type as "incoming" | "outgoing", // Type assertion for the union type
-                        amount: amountInSats, // Valor em sats
+                        id: tx.payment_hash,
+                        type: tx.type as "incoming" | "outgoing",
+                        amount: tx.amount,
                         description: tx.description || "No description",
-                        createdAt: date, // Data formatada para exibição
+                        createdAt: date,
                         paymentHash: tx.payment_hash,
-                        timestamp: timestamp || 0, // Adiciona timestamp numérico para ordenação
+                        timestamp: timestamp || 0,
                     };
                 });
 
-                // Ordena por timestamp em ordem decrescente (mais recente primeiro)
-                const sortedTransactions = formattedTransactions.sort((a, b) => b.timestamp - a.timestamp);
+                const sortedTransactions = formattedTransactions.sort(
+                    (a, b) => b.timestamp - a.timestamp
+                );
 
-                // Pega as 5 mais recentes (primeiras após ordenação)
-                const recentTransactions = sortedTransactions.slice(0, 10);
-                setTransactions(recentTransactions);
+                const displayedTransactions = limit
+                    ? sortedTransactions.slice(0, limit)
+                    : sortedTransactions;
+                setTransactions(displayedTransactions);
                 setError(null);
             }
         } catch (err) {
@@ -74,21 +67,23 @@ const Transactions = ({ nwc }: TransactionsProps) => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [nwc, limit]); // Dependências: nwc e limit
 
-    // Busca transações quando o componente é montado ou a carteira muda
+    // Busca transações quando o componente é montado ou a carteira muda, se não houver override
     useEffect(() => {
-        if (nwc) {
+        if (nwc && !transactionsOverride) {
             fetchTransactions();
+        } else if (transactionsOverride) {
+            setTransactions(transactionsOverride);
+            setError(null);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [nwc]);
+    }, [nwc, transactionsOverride, fetchTransactions]);
 
     return (
         <div className="w-full">
             <div className="flex flex-row items-center mb-2">
                 <MdOutlineSwapVert className="text-orange-500 text-lg" />
-                <h3 className="text-sm font-semibold text-gray-400">Recent Transactions</h3>
+                <h3 className="text-sm font-semibold text-gray-400">Transactions</h3>
             </div>
             {isLoading ? (
                 <div className="flex justify-center">
@@ -104,18 +99,20 @@ const Transactions = ({ nwc }: TransactionsProps) => {
             ) : (
                 <div className="space-y-3">
                     {transactions.map((tx) => (
-                        <div key={tx.id} className="flex items-center justify-between p-3 bg-zinc-900 hover:bg-zinc-800 transition duration-100 border border-zinc-900 rounded-sm cursor-pointer">
+                        <div
+                            key={tx.id}
+                            className="flex items-center justify-between p-3 bg-zinc-900 hover:bg-zinc-800 transition duration-100 border border-zinc-900 rounded-sm cursor-pointer"
+                        >
                             <div className="flex items-center gap-2">
-                                {/* <div className={`p-2 rounded-full ${tx.type === "incoming" ? "bg-green-500" : "bg-red-500"}`}>
-                                {tx.type === "incoming" ? <FiArrowDown className="text-white" /> : <FiArrowUp className="text-white" />}
-                            </div> */}
                                 <FiZap className="text-orange-500" />
                                 <div>
-                                    {/* <p className="text-gray-300 text-sm">{tx.description}</p> */}
                                     <p className="text-gray-400 text-xs">{tx.createdAt}</p>
                                 </div>
                             </div>
-                            <p className={`text-sm font-semibold ${tx.type === "incoming" ? "text-green-400" : "text-orange-500"}`}>
+                            <p
+                                className={`text-sm font-semibold ${tx.type === "incoming" ? "text-green-400" : "text-orange-500"
+                                    }`}
+                            >
                                 {tx.type === "incoming" ? "+" : "-"} {tx.amount} sats
                             </p>
                         </div>

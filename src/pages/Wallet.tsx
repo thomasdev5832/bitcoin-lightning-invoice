@@ -314,7 +314,7 @@ const Wallet = () => {
                         </button>
                     </div>
                     <MiniDashboard nwc={nwc} btcToUsd={btcToUsd} />
-                    <Transactions key={transactionsKey} nwc={nwc} />
+                    <Transactions key={transactionsKey} nwc={nwc} limit={10} />
                 </div>
 
                 <GenerateInvoiceModal

@@ -4,6 +4,7 @@ import { WalletProvider } from "./contexts/ContextWallet";
 import Wallet from "./pages/Wallet";
 import ConnectPage from "./pages/ConnectPage";
 import LandingPage from "./pages/LandingPage";
+import TransactionsPage from "./pages/TransactionsPage";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/connect" element={<ConnectPage />} />
           <Route path="/wallet" element={<Wallet />} />
+          <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/" element={<LandingPage />} />
         </Routes>
       </BrowserRouter>
