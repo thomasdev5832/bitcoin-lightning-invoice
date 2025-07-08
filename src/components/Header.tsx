@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiLoader, FiRefreshCw, FiLogOut } from "react-icons/fi";
+import { FiLoader, FiRefreshCw } from "react-icons/fi";
 import { useWallet } from "../contexts/ContextWallet";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaWallet } from "react-icons/fa";
@@ -9,18 +9,12 @@ import { MdOutlineDashboard } from "react-icons/md";
 
 function Header({ isLoading, checkBalance }: {
     isLoading: boolean;
-    checkBalance: () => void;
+    checkBalance?: () => void;
 }) {
-    const { nwc, disconnectWallet } = useWallet();
+    const { nwc } = useWallet();
     const navigate = useNavigate();
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const handleDisconnect = () => {
-        disconnectWallet();
-        setIsMenuOpen(false);
-        navigate("/");
-    };
 
     const handleNavigate = (path: string) => {
         setIsMenuOpen(false);
@@ -52,7 +46,7 @@ function Header({ isLoading, checkBalance }: {
                             </div>
                         </div>
                         <button
-                            onClick={() => checkBalance()}
+                            onClick={() => checkBalance?.()}
                             disabled={isLoading}
                             className="cursor-pointer p-2 bg-zinc-900 rounded-md hover:bg-zinc-800 transition flex items-center justify-center"
                         >
@@ -121,13 +115,6 @@ function Header({ isLoading, checkBalance }: {
                         >
                             <IoSettingsSharp className={location.pathname === "/settings" ? "text-orange-500" : ""} />
                             Settings
-                        </button>
-                        <button
-                            onClick={handleDisconnect}
-                            className="flex items-center justify-center sm:justify-start gap-2 text-white py-3 px-4 sm:py-2 sm:px-4 sm:w-40 sm:h-auto bg-red-500 hover:bg-red-600 transition-all duration-200 font-semibold rounded-md cursor-pointer uppercase"
-                        >
-                            <FiLogOut className="" />
-                            Disconnect
                         </button>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import ConnectPage from "./pages/ConnectPage";
 import LandingPage from "./pages/LandingPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import Dashboard from "./pages/Dashboard";
+import Settings from "./pages/Settings";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/" element={<LandingPage />} />
         </Routes>
       </BrowserRouter>
