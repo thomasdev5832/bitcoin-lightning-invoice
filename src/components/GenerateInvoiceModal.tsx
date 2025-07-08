@@ -3,13 +3,15 @@ import {
     FiLoader,
     FiZap,
     FiCopy,
-    FiShare2,
     FiSun,
     FiMoon,
     FiX,
     FiRefreshCw,
+    FiDownload,
 } from "react-icons/fi";
-import { QRCodeSVG } from "qrcode.react";
+import { QRCodeCanvas } from "qrcode.react";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 interface GenerateInvoiceModalProps {
     isOpen: boolean;
@@ -40,6 +42,7 @@ const GenerateInvoiceModal = ({
     const [satsAmount, setSatsAmount] = useState("");
     const [satsPerUsd, setSatsPerUsd] = useState(2800); // Default rate
     const [clickedKeys, setClickedKeys] = useState<string[]>([]);
+    const qrCodeRef = useRef<HTMLCanvasElement>(null);
     const prevIsOpenRef = useRef<boolean>(false);
 
     // Fetch Bitcoin USD price for sats conversion
@@ -153,6 +156,56 @@ const GenerateInvoiceModal = ({
         }
     };
 
+    // Save as PDF
+    const handleSaveAsPdf = () => {
+        if (!qrCodeRef.current || !invoice) return;
+
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const margin = 20;
+        const textColor = isDarkMode ? "#FFFFFF" : "#000000";
+        const bgColor = isDarkMode ? "#18181b" : "#FFFFFF";
+
+        // Set background color
+        doc.setFillColor(bgColor);
+        doc.rect(0, 0, pageWidth, pageHeight, "F");
+
+        // Set text color
+        doc.setTextColor(textColor);
+        doc.setFont("helvetica", "bold");
+
+        // Title
+        doc.setFontSize(20);
+        const title = "Lightning Invoice";
+        const titleWidth = doc.getTextWidth(title);
+        doc.text(title, (pageWidth - titleWidth) / 2, margin);
+
+        // QR Code
+        const qrCanvas = qrCodeRef.current;
+        const qrDataUrl = qrCanvas.toDataURL("image/png");
+        const qrSize = 100; // 100mm (~283px at 72dpi)
+        doc.addImage(qrDataUrl, "PNG", (pageWidth - qrSize) / 2, margin + 10, qrSize, qrSize);
+
+        // Invoice Details
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        const detailsY = margin + qrSize + 20;
+        doc.text(`Amount: ${invoiceAmount.toLocaleString()} sats`, margin, detailsY);
+        doc.text(`Description: ${invoiceDescription || "None"}`, margin, detailsY + 10);
+
+        // Invoice String (wrapped)
+        doc.setFont("courier", "normal");
+        doc.setFontSize(10);
+        const invoiceLines = doc.splitTextToSize(invoice, pageWidth - 2 * margin);
+        doc.text("Invoice:", margin, detailsY + 20);
+        doc.text(invoiceLines, margin, detailsY + 30);
+
+        // Save PDF
+        doc.save(`invoice_${invoiceAmount}_sats.pdf`);
+        console.log("PDF generated and downloaded");
+    };
+
     const toggleTheme = () => setIsDarkMode((prev) => !prev);
     const toggleInputMode = () => {
         setInputMode((prev) => (prev === "usd" ? "sats" : "usd"));
@@ -188,9 +241,7 @@ const GenerateInvoiceModal = ({
 
             {invoice ? (
                 <div
-                    className={`p-6 rounded-lg shadow-lg border animate-slide-up sm:w-xs flex flex-col ${isDarkMode
-                        ? "bg-zinc-900 text-gray-300 border-zinc-700"
-                        : "bg-gray-50 text-gray-700 border-gray-200"
+                    className={`p-6 rounded-lg shadow-lg border animate-slide-up sm:w-xs flex flex-col ${isDarkMode ? "bg-zinc-900 text-gray-300 border-zinc-700" : "bg-gray-50 text-gray-700 border-gray-200"
                         }`}
                 >
                     <div className="flex items-center justify-center gap-2">
@@ -199,7 +250,8 @@ const GenerateInvoiceModal = ({
                     </div>
 
                     <div className="flex flex-col items-center self-center justify-center my-4 p-2 bg-white w-fit rounded-md">
-                        <QRCodeSVG
+                        <QRCodeCanvas
+                            ref={qrCodeRef}
                             value={invoice}
                             size={220}
                             level="M"
@@ -210,9 +262,7 @@ const GenerateInvoiceModal = ({
                     </div>
 
                     <div
-                        className={`p-4 rounded-lg shadow-lg border animate-slide-up flex flex-col ${isDarkMode
-                            ? "bg-zinc-900 text-gray-300 border-zinc-700"
-                            : "bg-gray-50 text-gray-700 border-gray-200"
+                        className={`p-4 rounded-lg shadow-lg border animate-slide-up flex flex-col ${isDarkMode ? "bg-zinc-900 text-gray-300 border-zinc-700" : "bg-gray-50 text-gray-700 border-gray-200"
                             }`}
                     >
                         <p className="text-lg font-semibold">
@@ -228,10 +278,8 @@ const GenerateInvoiceModal = ({
 
                     <div className="mt-6 flex space-x-2">
                         <button
-                            onClick={() =>
-                                navigator.clipboard.writeText(invoice).then(() => alert("Invoice copied!"))
-                            }
-                            className={`flex-1 py-2 rounded-md flex items-center justify-center gap-2 transition ${isDarkMode
+                            onClick={() => navigator.clipboard.writeText(invoice).then(() => alert("Invoice copied!"))}
+                            className={`flex-1 py-2 rounded-md flex items-center justify-center gap-2 transition cursor-pointer ${isDarkMode
                                 ? "bg-zinc-800 text-white hover:bg-zinc-700 active:bg-zinc-600"
                                 : "bg-gray-200 text-gray-900 hover:bg-gray-300 active:bg-gray-400"
                                 } active:scale-95 active:shadow-inner focus:outline-none focus:ring-2 focus:ring-orange-500`}
@@ -239,25 +287,19 @@ const GenerateInvoiceModal = ({
                             <FiCopy className="h-5 w-5" /> Copy
                         </button>
                         <button
-                            onClick={() =>
-                                navigator.share
-                                    ? navigator.share({ title: "Lightning Invoice", text: invoice })
-                                    : alert("Sharing not supported")
-                            }
-                            className={`flex-1 py-2 rounded-md flex items-center justify-center gap-2 transition ${isDarkMode
+                            onClick={handleSaveAsPdf}
+                            className={`flex-1 py-2 rounded-md flex items-center justify-center gap-2 transition cursor-pointer ${isDarkMode
                                 ? "bg-zinc-800 text-white hover:bg-zinc-700 active:bg-zinc-600"
                                 : "bg-gray-200 text-gray-900 hover:bg-gray-300 active:bg-gray-400"
                                 } active:scale-95 active:shadow-inner focus:outline-none focus:ring-2 focus:ring-orange-500`}
                         >
-                            <FiShare2 className="h-5 w-5" /> Share
+                            <FiDownload className="h-5 w-5" /> Save as PDF
                         </button>
                     </div>
                 </div>
             ) : (
                 <div
-                    className={`p-6 rounded-lg shadow-lg w-full max-w-md border animate-slide-up ${isDarkMode
-                        ? "bg-zinc-900 text-gray-300 border-zinc-700"
-                        : "bg-gray-100 text-gray-700 border-gray-200"
+                    className={`p-6 rounded-lg shadow-lg w-full max-w-md border animate-slide-up ${isDarkMode ? "bg-zinc-900 text-gray-300 border-zinc-700" : "bg-gray-100 text-gray-700 border-gray-200"
                         }`}
                 >
                     <h2
@@ -269,16 +311,14 @@ const GenerateInvoiceModal = ({
 
                     <div className="text-center mb-4 items-center justify-center flex flex-col">
                         <p className="text-4xl font-mono">
-                            {inputMode === "usd"
-                                ? `$${usdAmount || "0.00"}`
-                                : `${satsAmount || "0"} sats`}
+                            {inputMode === "usd" ? `$${usdAmount || "0.00"}` : `${satsAmount || "0"} sats`}
                         </p>
                         <div className="flex flex-row items-center justify-around gap-2">
                             <button
                                 onClick={toggleInputMode}
                                 className={`p-2 rounded-full text-xs font-semibold cursor-pointer transition ${isDarkMode
-                                    ? " text-orange-500 hover:text-orange-600 hover:bg-zinc-900"
-                                    : " text-orange-500 hover:text-orange-600 hover:bg-zinc-200"
+                                    ? "text-orange-500 hover:text-orange-600 hover:bg-zinc-900"
+                                    : "text-orange-500 hover:text-orange-600 hover:bg-zinc-200"
                                     }`}
                                 aria-label={`Switch to ${inputMode === "usd" ? "sats" : "USD"} mode`}
                             >
@@ -311,10 +351,7 @@ const GenerateInvoiceModal = ({
                     </div>
 
                     <div className="mb-6">
-                        <label
-                            htmlFor="invoice-description"
-                            className="block text-sm font-semibold mb-1"
-                        >
+                        <label htmlFor="invoice-description" className="block text-sm font-semibold mb-1">
                             Description (optional)
                         </label>
                         <input
@@ -348,11 +385,7 @@ const GenerateInvoiceModal = ({
                                 : !satsAmount || parseInt(satsAmount, 10) <= 0 || isNaN(parseInt(satsAmount, 10)))
                         }
                     >
-                        {isLoading ? (
-                            <FiLoader className="animate-spin h-6 w-6 mx-auto" />
-                        ) : (
-                            "Generate Invoice"
-                        )}
+                        {isLoading ? <FiLoader className="animate-spin h-6 w-6 mx-auto" /> : "Generate Invoice"}
                     </button>
                 </div>
             )}
